@@ -3,6 +3,15 @@ import axios from 'axios';
 import { XMLParser } from 'fast-xml-parser';
 import './App.css';
 
+
+const options = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZjY0ODE4M2IwZWM4MTU5MDE5M2Y3Njg5ZDY3MGVjMCIsIm5iZiI6MTczMTc1NTg0MS40OTg4NTcsInN1YiI6IjY3MzI1Nzg2NmZjMDMxODI0YjA4NmQ2MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.HS3s393rxP-BSHxJo6RuClQnSzwCK8BwCHks2CEZuxY'
+  }
+};
+
 function App() {
   const [cinemas, setCinemas] = useState([]);
   const [selectedCinema, setSelectedCinema] = useState('');
@@ -42,6 +51,14 @@ function App() {
     fetchMovies(cinemaId);
   };
 
+  const fetchMovieList = async () => {
+    fetch('https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=1', options)
+      .then(res => res.json())
+      .then(res => console.log(res))
+      .catch(err => console.error(err));
+  }
+
+
   return (
     <div>
       <h1>Valitse elokuvateatteri</h1>
@@ -79,8 +96,14 @@ function App() {
       
 
     </div>
+
+
   </li>
 ))}
+
+<div>
+
+</div>
 
 
         
