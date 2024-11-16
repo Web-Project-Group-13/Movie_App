@@ -1,18 +1,14 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { XMLParser } from 'fast-xml-parser';
 import './App.css';
 
 
-const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZjY0ODE4M2IwZWM4MTU5MDE5M2Y3Njg5ZDY3MGVjMCIsIm5iZiI6MTczMTc1NTg0MS40OTg4NTcsInN1YiI6IjY3MzI1Nzg2NmZjMDMxODI0YjA4NmQ2MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.HS3s393rxP-BSHxJo6RuClQnSzwCK8BwCHks2CEZuxY'
-  }
-};
+
 
 function App() {
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState('')
   const [cinemas, setCinemas] = useState([]);
   const [selectedCinema, setSelectedCinema] = useState('');
   const [movies, setMovies] = useState([]);
@@ -51,11 +47,26 @@ function App() {
     fetchMovies(cinemaId);
   };
 
-  const fetchMovieList = async () => {
-    fetch('https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=1', options)
-      .then(res => res.json())
-      .then(res => console.log(res))
-      .catch(err => console.error(err));
+  const searchMovie = async (query) => {
+    const api_key = '5f648183b0ec81590193f7689d670ec0';
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${query}`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      const data = await response.json();
+      console.log(data.results)
+      setResults(data.results)
+    } catch (error) {
+      console.error('Error fetching movies:', error)
+    }
+  }
+  
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') { 
+      searchMovie(query); 
+    }
   }
 
 
@@ -102,7 +113,40 @@ function App() {
 ))}
 
 <div>
+  <input 
+  placeholder="Laita Teksti Tähän" 
+  value={query}
+  onChange={(e) => setQuery(e.target.value)} 
+  onKeyDown={handleKeyPress}
+  />
+</div>
 
+<div>
+  <h2>Results:</h2>
+  {results.length > 0 ? (
+    <ul style={{ listStyleType: 'none', padding: 0}}>
+      {results.map((movie) => (
+        <li
+          key={movie.id}
+          style = {{
+            border: '1px solid #ddd',
+            padding: '10px',
+            marginBottom: '10px',
+            borderRadius: '5px',
+          }}
+          >
+            <h3 style={{ margin: '0 0 10px' }}>{movie.title}</h3>
+            <p style= {{ margin: 0 }}>
+              {movie.overview
+              ? movie.overview
+              : 'No description available'}
+            </p>
+          </li>
+      ))}
+    </ul>
+  ) : (
+    <p>No movies found. Try searching for something else!</p>
+  )}
 </div>
 
 
@@ -111,5 +155,6 @@ function App() {
     </div>
   );
 };
+
 
 export default App;
