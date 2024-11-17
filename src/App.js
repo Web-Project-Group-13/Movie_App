@@ -8,7 +8,10 @@ import './App.css';
 
 function App() {
   const [query, setQuery] = useState('')
+  const [queryTV, setQueryTV] = useState('')
+  const [queryPerson, setQueryPerson] = useState('')
   const [results, setResults] = useState('')
+  const [resultsTV, setResultsTV] = useState('')
   const [cinemas, setCinemas] = useState([]);
   const [selectedCinema, setSelectedCinema] = useState('');
   const [movies, setMovies] = useState([]);
@@ -47,6 +50,7 @@ function App() {
     fetchMovies(cinemaId);
   };
 
+  // Hakee ja tulostaa elokuvat haun mukaan
   const searchMovie = async (query) => {
     const api_key = '5f648183b0ec81590193f7689d670ec0';
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${query}`;
@@ -62,10 +66,27 @@ function App() {
       console.error('Error fetching movies:', error)
     }
   }
+
+  const searchTV = async (queryTV) => {
+    const api_key = '5f648183b0ec81590193f7689d670ec0';
+    const url = `https://api.themoviedb.org/3/search/tv?api_key=${api_key}&query=${queryTV}`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      const data = await response.json();
+      console.log(data.results)
+      setResults(data.results)
+    } catch (error) {
+      console.error('Error fetching TV:', error)
+    }
+  }
   
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') { 
-      searchMovie(query); 
+      searchMovie(query);
+      searchTV(queryTV);
     }
   }
 
@@ -112,11 +133,30 @@ function App() {
   </li>
 ))}
 
+
 <div>
   <input 
   placeholder="Laita Teksti Tähän" 
   value={query}
   onChange={(e) => setQuery(e.target.value)} 
+  onKeyDown={handleKeyPress}
+  />
+</div>
+
+<div>
+  <input
+  placeholder='Hae TV Sarjoja'
+  value={queryTV}
+  onChange={(e) => setQueryTV(e.target.value)}
+  onKeyDown={handleKeyPress}
+  />
+</div>
+
+<div>
+  <input
+  placeholder='Hae Henkilöitä'
+  value={queryPerson}
+  onChange={(e) => setQueryPerson(e.target.value)}
   onKeyDown={handleKeyPress}
   />
 </div>
@@ -146,6 +186,34 @@ function App() {
     </ul>
   ) : (
     <p>No movies found. Try searching for something else!</p>
+  )}
+</div>
+
+<div>
+  <h2>TV Results:</h2>
+  {results.length > 0 ? (
+    <ul style={{ listStyleType: 'none', padding: 0}}>
+      {results.map((tv) => (
+        <li
+          key={tv.id}
+          style = {{
+            border: '1px solid #eee',
+            padding: '10px',
+            marginBottom: '10px',
+            borderRadius: '5px',
+          }}
+        >
+          <h3 style={{ margin: '0 0 10px' }}>{tv.title}</h3>
+          <p style= {{ margin: 0 }}>
+            {tv.overview
+            ? tv.overview
+            : 'No description available'}
+          </p>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p>No TV series found. Try searching for something else!</p>
   )}
 </div>
 
