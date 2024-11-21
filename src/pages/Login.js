@@ -37,6 +37,13 @@ const Login = ({ onLogin }) => {
             Kirjaudu sisään
           </button>
         </form>
+
+        {/* Linkit rekisteröitymiseen ja kirjautumiseen ilman tiliä */}
+        <div className="login-links">
+          <a href="#" className="login-link">Ei tiliä? Rekisteröidy palveluun</a>
+          <br />
+          <a href="#" className="login-link">Kirjaudu sisään ilman tiliä</a>
+        </div>
       </div>
     </div>
   );
