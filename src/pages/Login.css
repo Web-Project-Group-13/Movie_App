@@ -1,0 +1,64 @@
+/* Keskittää lomakkeen ruudun keskelle */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #fc6537;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Lomakekotelon tyyli */
+  .login-form {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  /* Otsikko */
+  .login-form h2 {
+    margin-bottom: 1.5rem;
+    color: #333333;
+  }
+  
+  /* Syötekenttä */
+  .login-input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  /* Syötekentän hover- ja fokus-tilat */
+  .login-input:focus {
+    border-color: #fc6537;
+    outline: none;
+  }
+  
+  /* Kirjautumispainike */
+  .login-button {
+    background: #fc6537;
+    color: white;
+    border: none;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  /* Hover-tila kirjautumispainikkeelle */
+  .login-button:hover {
+    background: #d84315;
+  }
+  
+  /* Responsiivisuus pienille näytöille */
+  @media (max-width: 400px) {
+    .login-form {
+      width: 90%;
+    }
+  }  
