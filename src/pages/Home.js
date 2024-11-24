@@ -1,8 +1,13 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { XMLParser } from 'fast-xml-parser';
 
 const Home = () => {
+  const [query, setQuery] = useState([])
+  const [queryTV, setQueryTV] = useState([])
+  const [queryPerson, setQueryPerson] = useState('')
+  const [results, setResults] = useState('')
+  const [resultsTV, setResultsTV] = useState('')
   const [cinemas, setCinemas] = useState([]);
   const [selectedCinema, setSelectedCinema] = useState('');
   const [movies, setMovies] = useState([]);
@@ -58,6 +63,57 @@ const Home = () => {
 
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
+  };
+
+  const searchMovie = async (query) => {
+    const api_key = '775c0d7ee555978a2f19d45471ffa589';
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${query}`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      const data = await response.json();
+      console.log(data.results)
+      setResults(data.results)
+    } catch (error) {
+      console.error('Error fetching movies:', error)
+    }
+  }
+
+  const searchTV = async (queryTV) => {
+    const api_key = '775c0d7ee555978a2f19d45471ffa589';
+    const url = `https://api.themoviedb.org/3/search/tv?api_key=${api_key}&query=${queryTV}`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      const data = await response.json();
+      console.log(data.results)
+      setResultsTV(data.results)
+    } catch (error) {
+      console.error('Error fetching TV:', error)
+    }
+  }
+  
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      const movieQuery = typeof query === 'string' ? query.trim() : '';
+      const tvQuery = typeof queryTV === 'string' ? queryTV.trim() : '';
+  
+      if (!movieQuery && !tvQuery) {
+        alert('Please enter a search term in at least one box.');
+        return;
+      }
+  
+      if (movieQuery) {
+        searchMovie(movieQuery);
+      }
+      if (tvQuery) {
+        searchTV(tvQuery);
+      }
+    }
   };
 
   return (
@@ -116,7 +172,95 @@ const Home = () => {
           </ul>
         </>
       )}
+      <p></p>
+      <div>
+        <input 
+        placeholder="Laita Teksti Tähän" 
+        value={query}
+        onChange={(e) => setQuery(e.target.value)} 
+        onKeyDown={handleKeyPress}
+        />
+      </div>
+
+      <div>
+        <input
+        placeholder='Hae TV Sarjoja'
+        value={queryTV}
+        onChange={(e) => setQueryTV(e.target.value)}
+        onKeyDown={handleKeyPress}
+        />
+      </div>
+
+      <div>
+        <input
+        placeholder='Hae Henkilöitä'
+        value={queryPerson}
+        onChange={(e) => setQueryPerson(e.target.value)}
+        onKeyDown={handleKeyPress}
+        />
+      </div>
+
+      <div>
+        <h2>Results:</h2>
+        {results.length > 0 ? (
+          <ul style={{ listStyleType: 'none', padding: 0}}>
+            {results.map((movie) => (
+              <li
+                key={movie.id}
+                style = {{
+                  border: '1px solid #ddd',
+                  padding: '10px',
+                  marginBottom: '10px',
+                  borderRadius: '5px',
+                }}
+                >
+                  <h3 style={{ margin: '0 0 10px' }}>{movie.title}</h3>
+                  <p style= {{ margin: 0 }}>
+                    {movie.overview
+                    ? movie.overview
+                    : 'No description available'}
+                  </p>
+                </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No movies found. Try searching for something else!</p>
+        )}
+      </div>
+
+      <div>
+        <h2>TV Results:</h2>
+        {resultsTV.length > 0 ? (
+          <ul style={{ listStyleType: 'none', padding: 0}}>
+            {resultsTV.map((tv) => (
+              <li
+                key={tv.id}
+                style = {{
+                  border: '1px solid #eee',
+                  padding: '10px',
+                  marginBottom: '10px',
+                  borderRadius: '5px',
+                }}
+              >
+                <h3 style={{ margin: '0 0 10px' }}>{tv.name}</h3>
+                <p style= {{ margin: 0 }}>
+                  {tv.overview
+                  ? tv.overview
+                  : 'No description available'}
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No TV series found. Try searching for something else!</p>
+        )}
+      </div>
+
+
+      
     </div>
+
+    
   );
 };
 
