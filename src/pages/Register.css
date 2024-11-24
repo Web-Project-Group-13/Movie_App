@@ -1,0 +1,66 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #fc6537;
+    font-family: 'Arial', sans-serif;
+  }
+
+  .register-form {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    width: 400px; /* Leveämpi lomake */
+  }
+
+  .username {
+    display: flex;
+    justify-content: space-between;
+    margin: 1em;
+  }
+
+  .password {
+    display: flex;
+    justify-content: space-between;
+    margin: 1em;
+  }
+
+  .register-form h2 {
+    margin-bottom: 2em;
+    color: #333333;
+  }
+
+  .register-input {
+    width: 100%;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 1rem; 
+    
+  }
+  
+
+  .register-input:focus {
+    border-color: #fc6537;
+    outline: none;
+    box-shadow: 0 0 5px rgba(252, 101, 55, 0.5);
+  }
+
+  .register-button {
+    background: #fc6537;
+    color: white;
+    border: none;
+    padding: 0.8rem 0.8rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .register-button:hover {
+    background: #ee0a3c;
+  }
