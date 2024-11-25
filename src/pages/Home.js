@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './Home.css';
 import { XMLParser } from 'fast-xml-parser';
+
+
 
 const Home = () => {
   const [query, setQuery] = useState([])
@@ -12,6 +15,19 @@ const Home = () => {
   const [selectedCinema, setSelectedCinema] = useState('');
   const [movies, setMovies] = useState([]);
   const [selectedDate, setSelectedDate] = useState('');
+
+
+  useEffect(() => {
+   const navbar = document.querySelector('.navbar');
+   const splits = document.querySelectorAll('.split');
+   if (navbar) {
+        const navbarHeight = navbar.offsetHeight;
+        splits.forEach(split => {
+        split.style.marginTop = `${navbarHeight}px`;
+      });
+    }
+  }, []);
+
 
   // Hakee teatterit
   useEffect(() => {
@@ -118,6 +134,32 @@ const Home = () => {
 
   return (
     <div>
+
+      <nav class="navbar">
+        
+        <ul>
+          <div>
+          <input 
+            placeholder="Hae Elokuvia" 
+            value={query}
+            onChange={(e) => setQuery(e.target.value)} 
+            onKeyDown={handleKeyPress}
+          />
+          <input
+            placeholder='Hae TV Sarjoja'
+            value={queryTV}
+            onChange={(e) => setQueryTV(e.target.value)}
+           onKeyDown={handleKeyPress}
+           />
+           </div>
+
+          <li><a href="/login">Login</a></li>
+          <li><a href="/register">Register</a></li>
+          <li><a href="/profile">Profile</a></li>
+        </ul>
+      </nav>
+
+    <div class="split right">
       <h1>Finnkinon elokuvateattereiden näytösajat</h1>
       
       <select value={selectedCinema} onChange={handleCinemaChange}>
@@ -172,35 +214,9 @@ const Home = () => {
           </ul>
         </>
       )}
-      <p></p>
-      <div>
-        <input 
-        placeholder="Laita Teksti Tähän" 
-        value={query}
-        onChange={(e) => setQuery(e.target.value)} 
-        onKeyDown={handleKeyPress}
-        />
-      </div>
+    </div>
 
-      <div>
-        <input
-        placeholder='Hae TV Sarjoja'
-        value={queryTV}
-        onChange={(e) => setQueryTV(e.target.value)}
-        onKeyDown={handleKeyPress}
-        />
-      </div>
-
-      <div>
-        <input
-        placeholder='Hae Henkilöitä'
-        value={queryPerson}
-        onChange={(e) => setQueryPerson(e.target.value)}
-        onKeyDown={handleKeyPress}
-        />
-      </div>
-
-      <div>
+      <div class="split left">
         <h2>Results:</h2>
         {results.length > 0 ? (
           <ul style={{ listStyleType: 'none', padding: 0}}>
