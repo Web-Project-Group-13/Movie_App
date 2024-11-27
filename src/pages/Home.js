@@ -8,7 +8,7 @@ import { XMLParser } from 'fast-xml-parser';
 const Home = () => {
   const [query, setQuery] = useState([])
   const [queryTV, setQueryTV] = useState([])
-  const [queryPerson, setQueryPerson] = useState('')
+  //const [queryPerson, setQueryPerson] = useState('')
   const [results, setResults] = useState('')
   const [resultsTV, setResultsTV] = useState('')
   const [cinemas, setCinemas] = useState([]);
