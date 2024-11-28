@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { hash } from "bcrypt";
-import { insertUser } from "../models/User.js";
+import { insertUser,deleteUser } from "../models/User.js";
 
 const router = Router();
 
@@ -27,5 +27,25 @@ router.post('/', async (req, res, next) => {
         next(error); // Lähetetään virhe ylempään virheenkäsittelijään
     }
 });
+
+// Poista käyttäjä tietokannasta
+router.delete('/delete/:username', async (req, res) => {
+    try {
+      const { username } = req.params;
+
+      // Kutsutaan deleteUser-funktiota, joka poistaa käyttäjän tietokannasta
+      const result = await deleteUser(username);
+  
+       // Jos käyttäjää ei löydy tietokannasta, palautetaan virhe
+      if (result.rowCount === 0) {
+        return res.status(404).json({ message: 'Käyttäjää ei löytynyt.' });
+      }
+  
+      res.status(200).json({ message: 'Käyttäjä poistettu onnistuneesti.' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Virhe käyttäjän poistamisessa.' });
+    }
+  });
 
 export default router;
