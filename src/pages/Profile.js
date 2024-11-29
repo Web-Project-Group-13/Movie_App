@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import './profile.css';
 import axios from 'axios';
 import { useState } from 'react';
+import '../components/news.js'
+import News from '../components/news.js';
 
 function Profile({ username }) {
     const [movies, setMovies] = useState([]);
@@ -75,6 +77,7 @@ function Profile({ username }) {
         Poista tili
       </button>
     </div>
+    <News />
     <button onClick={toggleMenu} className="toggle-menu-button">
           {isMenuOpen ? 'Sulje valikko' : 'Näytä elokuvat'}
     </button>
@@ -121,6 +124,7 @@ function Profile({ username }) {
         ))}
         </div>
     </div>
+    
   );
 }
 

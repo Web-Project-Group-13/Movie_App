@@ -78,13 +78,13 @@
   }
 
   .favorite-list button:hover {
-    background-color: #e60000;
+    background-color: #16d656;
   }
   
 
   .toggle-menu-button {
     padding: 10px 15px;
-    background-color: #007bff;
+    background-color: #e6c01a;
     color: white;
     border: none;
     border-radius: 5px;
@@ -94,7 +94,7 @@
   }
 
   .toggle-menu-button:hover {
-    background-color: #0056b3;
+    background-color: #010a14;
   }
   
   .movie-item {
@@ -125,7 +125,7 @@
   
   button {
     padding: 5px 10px;
-    background-color: #ff4d4d;
+    background-color: #e6c01a;
     color: white;
     border: none;
     cursor: pointer;
@@ -143,4 +143,73 @@
     gap: 10px; /* Väli elokuvien välillä */
     justify-content: center; /* Keskittää elokuvat */
   }
-  
+
+  .carousel-container {
+    text-align: center;
+    margin: 20px;
+}
+
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden; /* Piilottaa karusellin ulkopuoliset uutiset */
+}
+
+.carousel-items {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+  .news-item {
+    margin:0 10px;
+    width: 300px;
+    text-align: center;
+  }
+
+.news-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.news-item h3 {
+      font-size: 1rem;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    /* Karusellin nuolien tyylit */
+    .carousel-btn {
+        background: rgba(0, 17, 2, 0.863);
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 18px;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1000;
+        opacity: 1;  /* Asetetaan aina näkyväksi */
+        visibility: visible; /* Aina näkyvissä */
+        transition: opacity 0.3s ease; /* Lisätään sujuva siirtymä */
+    }
+    
+    .carousel-btn.left {
+        left: 10px;
+    }
+    
+    .carousel-btn.right {
+        right: 10px;
+    }
+
+    .carousel-btn:hover {
+      opacity: 1;
+      visibility: visible;
+      background-color: #e6c01a;
+      
+  }
