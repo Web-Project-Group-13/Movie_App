@@ -61,3 +61,15 @@ body{
     background-color: white;
   }
   
+
+.container{
+    display: grid;
+    align-items: top;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 5px;
+}
+
+.rating{
+    align-items: bottom;
+    float: right;
+}
