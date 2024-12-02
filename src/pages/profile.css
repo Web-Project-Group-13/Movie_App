@@ -1,0 +1,146 @@
+.profile-container{
+    max-Width: 600px;
+    margin: 0 auto;
+    text-Align: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-Radius: 8px;
+    background-Color: #f9f9f9;
+  }
+  header{
+    font-Size: 24px;
+    margin-Bottom:20px;
+  }
+  text{
+    font-size: 18px;
+    margin-Bottom: 20px;
+  }
+  .delete-button {
+    background-color: #ff4d4d; 
+    color: #fff; 
+    border: none; 
+    padding: 15px 30px; 
+    border-radius: 12px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+  }
+
+  .delete-button:hover {
+    background: #240108;
+  }
+
+    /* Valikko, joka aluksi piilotetaan */
+  .movie-container {
+    display: none;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+    /* Valikko, joka on auki */
+  .movie-container.open {
+    display:block;
+    max-height: 5000px;
+    opacity: 1;
+  }
+
+  .favorite-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .favorite-list .movie-item {
+    width: 150px;
+    text-align: center;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background-color: #f4f4f4;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .favorite-list img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .favorite-list button {
+    padding: 5px 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+
+  .favorite-list button:hover {
+    background-color: #e60000;
+  }
+  
+
+  .toggle-menu-button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  .toggle-menu-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .movie-item {
+    display: inline-flex; /* Tämä asettaa elokuvat vierekkäin */
+    flex-direction: column; /* Kuvan ja nimen välinen järjestys */
+    align-items: center;
+    margin: 10px;
+    width: 150px; /* Määrittele vakio leveys */
+    text-align: center;
+    border-radius: 8px;
+    background-color: #f4f4f4;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .movie-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .movie-item p {
+    font-size: 14px;
+    margin: 0;
+    color: #333;
+  }
+  
+  button {
+    padding: 5px 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+  }
+  
+  button:hover {
+    background-color: #e60000;
+  }
+  
+  .favorite-list {
+    display: flex;
+    flex-wrap: wrap; /* Tämä mahdollistaa elokuvien rivittämisen */
+    gap: 10px; /* Väli elokuvien välillä */
+    justify-content: center; /* Keskittää elokuvat */
+  }
+  
