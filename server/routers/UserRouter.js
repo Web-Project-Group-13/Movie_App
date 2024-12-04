@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import { hash, compare } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { insertUser, deleteUser, selectUserByEmail } from "../models/User.js";
@@ -6,6 +7,7 @@ import { insertUser, deleteUser, selectUserByEmail } from "../models/User.js";
 const router = Router();
 // Kovakoodattu JWT-avain
 const JWT_SECRET = 'mysecretkey';
+
 
 router.post('/', async (req, res, next) => {
     const { username, password } = req.body;
@@ -30,6 +32,7 @@ router.post('/', async (req, res, next) => {
         next(error); // Lähetetään virhe ylempään virheenkäsittelijään
     }
 });
+
 
 // Käyttäjän kirjautuminen
 router.post('/login', async (req, res) => {
@@ -72,6 +75,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+
 // Poista käyttäjä tietokannasta
 router.delete('/delete/:username', async (req, res) => {
     try {
@@ -92,4 +96,6 @@ router.delete('/delete/:username', async (req, res) => {
     }
   });
 
+
 export default router;
+

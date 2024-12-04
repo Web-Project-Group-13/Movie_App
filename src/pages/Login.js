@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './Login.css';
+import { Link } from "react-router-dom";
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
@@ -40,9 +41,9 @@ const Login = ({ onLogin }) => {
 
         {/* Linkit rekisteröitymiseen ja kirjautumiseen ilman tiliä */}
         <div className="login-links">
-          <a href="#" className="login-link">Ei tiliä? Rekisteröidy palveluun</a>
+          <Link to="/register" className="login-link">Ei tiliä? Rekisteröidy palveluun</Link>
           <br />
-          <a href="#" className="login-link">Kirjaudu sisään ilman tiliä</a>
+          <Link to ="/home" className="login-link">Kirjaudu sisään ilman tiliä</Link>
         </div>
       </div>
     </div>
