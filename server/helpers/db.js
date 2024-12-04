@@ -7,8 +7,12 @@ const openDb = () => {
     const pool = new Pool({
         user: 'postgres',
         host: 'localhost',
+
+        password:'', // Määrittämäsi salasana
+
         database: 'test_movie',
-        password:'Tähän jokaisen oma salasana',
+        
+
         port: 5432
     })
     return pool
@@ -16,4 +20,6 @@ const openDb = () => {
 
 const pool = openDb()
 
+
 export{ pool }
+
