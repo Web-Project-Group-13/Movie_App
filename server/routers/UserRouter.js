@@ -1,10 +1,14 @@
 import { Router } from "express";
-import { hash } from "bcrypt";
-import { insertUser,deleteUser } from "../models/User.js";
+import { hash, compare } from "bcrypt";
+import jwt from "jsonwebtoken";
+import { insertUser, deleteUser, selectUserByEmail } from "../models/User.js";
 
 const router = Router();
+// Kovakoodattu JWT-avain
+const JWT_SECRET = 'mysecretkey';
 
-router.post('/', async (req, res, next) => {
+
+router.post('/register', async (req, res, next) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -24,9 +28,52 @@ router.post('/', async (req, res, next) => {
         });
     } catch (error) {
         console.error('Virhe käyttäjän lisäämisessä:', error);
-        next(error); // Lähetetään virhe ylempään virheenkäsittelijään
+        next(error); 
     }
 });
+
+
+// Käyttäjän kirjautuminen
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  // Tarkistetaan, että käyttäjätunnus ja salasana on kirjoitettu
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Käyttäjätunnus ja salasana ovat pakollisia.' });
+  }
+
+  try {
+    // Haetaan käyttäjä tietokannasta
+    const result = await selectUserByEmail(username);
+
+    // Tarkistetaan, löytyykö käyttäjä
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Käyttäjää ei löytynyt.' });
+    }
+
+    const user = result.rows[0];
+
+    // Tarkistetaan salasanan oikeellisuus
+    const isPasswordValid = await compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Virheellinen salasana.' });
+    }
+
+    // Luodaan JWT-token
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    // Palautetaan token
+    res.status(200).json({ token });
+  } catch (error) {
+    console.error('Kirjautumisvirhe:', error);
+    res.status(500).json({ message: 'Virhe kirjautumisessa.' });
+  }
+});
+
 
 // Poista käyttäjä tietokannasta
 router.delete('/delete/:username', async (req, res) => {
@@ -48,4 +95,6 @@ router.delete('/delete/:username', async (req, res) => {
     }
   });
 
+
 export default router;
+
