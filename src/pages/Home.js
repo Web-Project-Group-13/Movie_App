@@ -8,9 +8,10 @@ import { XMLParser } from 'fast-xml-parser';
 const Home = () => {
   const [query, setQuery] = useState([])
   const [queryTV, setQueryTV] = useState([])
-  //const [queryPerson, setQueryPerson] = useState('')
+  const [personQuery, setPersonQuery] = useState([])
   const [results, setResults] = useState('')
   const [resultsTV, setResultsTV] = useState('')
+  const [resultsPerson, setResultsPerson] = useState('')
   const [cinemas, setCinemas] = useState([]);
   const [selectedCinema, setSelectedCinema] = useState('');
   const [movies, setMovies] = useState([]);
@@ -112,13 +113,30 @@ const Home = () => {
       console.error('Error fetching TV:', error)
     }
   }
+
+  const searchPerson = async (personQuery) => {
+    const api_key = '775c0d7ee555978a2f19d45471ffa589';
+    const url = `https://api.themoviedb.org/3/search/person?api_key=${api_key}&query=${personQuery}`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      const data = await response.json();
+      console.log(data.results)
+      setResultsPerson(data.results)
+    } catch (error) {
+      console.error('Error fetching persons:', error)
+    }
+  }
   
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       const movieQuery = typeof query === 'string' ? query.trim() : '';
       const tvQuery = typeof queryTV === 'string' ? queryTV.trim() : '';
+      const queryPerson = typeof personQuery === 'string' ? personQuery.trim() : '';
   
-      if (!movieQuery && !tvQuery) {
+      if (!movieQuery && !tvQuery && !queryPerson) {
         alert('Please enter a search term in at least one box.');
         return;
       }
@@ -128,6 +146,9 @@ const Home = () => {
       }
       if (tvQuery) {
         searchTV(tvQuery);
+      }
+      if (queryPerson) {
+        searchPerson(queryPerson);
       }
     }
   };
@@ -150,6 +171,12 @@ const Home = () => {
             value={queryTV}
             onChange={(e) => setQueryTV(e.target.value)}
            onKeyDown={handleKeyPress}
+           />
+           <input
+            placeholder='Hae henkilöitä'
+            value={personQuery}
+            onChange={(e) => setPersonQuery(e.target.value)}
+            onKeyDown={handleKeyPress}
            />
            </div>
 
@@ -305,6 +332,34 @@ const Home = () => {
           </ul>
         ) : (
           <p>No TV series found. Try searching for something else!</p>
+        )}
+      </div>
+
+      <div>
+      <h2>Person Results:</h2>
+        {resultsPerson.length > 0 ? (
+          <ul style={{ listStyleType: 'none', padding: 0}}>
+            {resultsPerson.map((person) => (
+              <li
+                key={person.id}
+                style = {{
+                  border: '1px solid #eee',
+                  padding: '10px',
+                  marginBottom: '10px',
+                  borderRadius: '5px',
+                }}
+              >
+                <h3 style={{ margin: '0 0 10px' }}>{person.name}</h3>
+                <p style= {{ margin: 0 }}>
+                  {person.profile_path
+                  ? person.profile_path
+                  : 'No description available'}
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No persons found. Try searching for something else!</p>
         )}
       </div>
 
