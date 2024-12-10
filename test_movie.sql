@@ -14,3 +14,13 @@ CREATE TABLE reviews (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Aikaleima
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "User" (id) ON DELETE CASCADE
 );
+
+CREATE TABLE favorite_movies (
+    id SERIAL PRIMARY KEY, -- Yksilöllinen tunniste
+    user_id INTEGER NOT NULL, -- Viittaus käyttäjän ID:hen
+    tmdb_id INTEGER NOT NULL, -- Elokuvan TMDb ID
+    title VARCHAR(255) NOT NULL, -- Elokuvan nimi
+    poster_path VARCHAR(255), -- Polku elokuvan julisteeseen
+    created_at TIMESTAMP DEFAULT NOW(), -- Lisäysaika
+    FOREIGN KEY (user_id) REFERENCES "User"(id) ON DELETE CASCADE
+);

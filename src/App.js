@@ -51,7 +51,7 @@ function App() {
         
         <Route 
           path="/profile" 
-          element={<Profile username={username} />} />
+          element={user ? <Profile username={username} setUser={setUser}/>: <Navigate to="/login" /> } />
 
         <Route
           path="/reviews"
