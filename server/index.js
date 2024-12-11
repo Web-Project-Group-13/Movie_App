@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import UserRouter from './routers/UserRouter.js';
 import reviewRouter from './routers/reviewRouter.js';
+import favoriteMovieRouter from './routers/favoriteMovieRouter.js';
 
 const port = 3001;
 
@@ -10,9 +11,12 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+
 app.use('/', UserRouter);
 app.use('/user', UserRouter);
 app.use('/reviews', reviewRouter);
+app.use('/favorites', favoriteMovieRouter);
 
 app.use((err,req, res,next) => {
     const statusCode = err.statusCode || 500;

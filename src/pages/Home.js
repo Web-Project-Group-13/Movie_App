@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Home.css';
 import { XMLParser } from 'fast-xml-parser';
+import { Link } from 'react-router-dom';
 
 
 
@@ -180,11 +181,13 @@ const Home = () => {
            />
            </div>
 
-          <li><a href="/login">Login</a></li>
-          <li><a href="/register">Register</a></li>
-          <li><a href="/profile">Profile</a></li>
-          <li><a href="/reviews">Reviews</a></li>
-          <li><a href="/groups">Groups</a></li>
+
+          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
+          <Link to="/profile">Profile</Link>
+          <Link to="/reviews">Reviews</Link>
+          <Link to="/groups">Groups</Link>
+
         </ul>
       </nav>
 

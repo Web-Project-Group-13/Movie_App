@@ -48,6 +48,12 @@ function App() {
       {/* Reviews-sivu */}
       <Route path="/reviews" element={<Reviews />} />
 
+
+        
+        <Route 
+          path="/profile" 
+          element={user ? <Profile username={username} setUser={setUser}/>: <Navigate to="/login" /> } />
+
       {/* Ryhmät-sivu */}
       <Route
         path="/groups"
@@ -59,6 +65,7 @@ function App() {
           />
         }
       />
+
 
       {/* Yksittäisen ryhmän sivu */}
       <Route

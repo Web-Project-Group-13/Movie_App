@@ -8,7 +8,7 @@ const openDb = () => {
         user: 'postgres',
         host: 'localhost',
         password:'', // Määrittämäsi salasana
-        database: '',
+        database: 'test_movie',
         port: 5432
     })
     return pool
