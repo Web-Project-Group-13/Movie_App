@@ -5,21 +5,40 @@ import { useState } from 'react';
 import News from '../components/news.js';
 import { Link, useNavigate } from 'react-router-dom';
 
-function Profile({ username,setUser }) {
+function Profile({ username }) {
     const [movies, setMovies] = useState([]);
     const [favoriteMovies, setFavoriteMovies] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState('all');
     const [isMenuOpen,setIsMenuOpen] = useState(false)
+    const [user, setUser] = useState(null)
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
     const navigate = useNavigate()
     
     const API_KEY ='775c0d7ee555978a2f19d45471ffa589'
     const baseURL = 'https://api.themoviedb.org/3'
 
+    
+
     const handleLogout = () => {
-      setUser(null)
-      navigate('/')
+      try {
+        // Hae token sessionStoragesta
+        const token = sessionStorage.getItem('token')
+        console.log('Token:', token)
+
+        // Poista token sessionStoragesta
+        sessionStorage.removeItem('token')
+
+        //Nollaa käyttäjä
+        setUser(null)
+        sessionStorage.removeItem('currentUser')
+        
+        //Ohjaa käyttäjä Home-sivulle
+        navigate('/')
+    } catch (error) {
+        console.error('Virhe kirjauduttaessa ulos:', error)
+        alert('Kirjauduttaessa ulos tapahtui virhe.')
     }
+  }
     
     // Poistetaan käyttäjätili
     const handleDelete = async () => {
@@ -111,7 +130,6 @@ function Profile({ username,setUser }) {
     <div className='profile-container'>
       <h1>Profiili</h1>
       <h2> Tervetuloa {username}!</h2>
-      <p>Käyttäjätunnus: {username}</p>
       <button type="submit" className="delete-button" onClick={handleDelete}>
         Poista tili
       </button>

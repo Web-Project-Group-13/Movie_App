@@ -1,53 +1,87 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Muutetaan navigointi Link-komponentiksi
+import React, { useState,useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // Muutetaan navigointi Link-komponentiksi
 import './Groups.css';
+import axios from 'axios';
 
-const Groups = ({ groups, setGroups, currentUser }) => {
-  const [newGroupName, setNewGroupName] = useState('');
+const Groups = ({ currentUser }) => {
+  const [newGroupName, setNewGroupName] = useState('')
+  const [groups, setGroups] = useState([])
+  const navigate = useNavigate()
 
-  const handleCreateGroup = () => {
+  // Hae ryhmät tietokannasta
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/groups');
+        setGroups(response.data);
+      } catch (error) {
+        console.error('Virhe ryhmien haussa:', error);
+      }
+    };
+    fetchGroups();
+  }, []);
+
+
+  const handleCreateGroup = async () => {
     if (!newGroupName.trim()) {
       alert('Anna ryhmälle nimi!');
       return;
     }
-    const newGroup = {
-      id: Date.now().toString(),
+    try {
+
+    const response =await axios.post('http://localhost:3001/groups/add', {
       name: newGroupName,
       owner: currentUser,
       members: [currentUser],
-    };
-    setGroups([...groups, newGroup]);
+    });
+    setGroups([...groups, response.data]);
     setNewGroupName('');
-  };
+  }catch (error) {
+    console.error('Virhe ryhmän luomisessa:', error.message);
+  }
+}
 
-  const handleDeleteGroup = (id) => {
-    const groupToDelete = groups.find((group) => group.id === id);
-    if (groupToDelete.owner !== currentUser) {
+  const handleDeleteGroup = async (id,owner) => {
+    if (owner !== currentUser) {
       alert('Vain ryhmän omistaja voi poistaa tämän ryhmän.');
       return;
     }
-    setGroups(groups.filter((group) => group.id !== id));
-  };
+    try {
+      await axios.delete(`http://localhost:3001/groups/${id}`);
+      setGroups(groups.filter((group) => group.id !== id));
+  }catch (error) {
+    console.error('Virhe ryhmän poistamisessa:', error.message);
+  }
+}
+  // Näytä ryhmän sisältö
+  const handleViewGroup = (id,members = []) => {
+    console.log('Ryhmän jäsenet:', members);
+    console.log('Kirjautunut käyttäjä:', currentUser);
 
-  const handleViewGroup = (id) => {
-    const group = groups.find((group) => group.id === id);
-    if (!group.members.includes(currentUser)) {
+    // Tarkista onko käyttäjä ryhmän jäsen
+    if (!Array.isArray(members)) {
+      alert('Virhe ryhmän jäsenten haussa.');
+      return;
+    }
+    
+    if (!members.includes(currentUser)) {
       alert('Vain ryhmän jäsenet voivat tarkastella sisältöä.');
       return;
     }
     // Navigoi ryhmän sivulle
-    window.location.href = `/groups/${id}`;
+    navigate(`/groups/${id}`);
   };
+
 
   return (
     <div className="groups">
       <nav className="navbar">
         <ul>
-          <li><a href="/login">Login</a></li>
-          <li><a href="/register">Register</a></li>
-          <li><a href="/profile">Profile</a></li>
-          <li><a href="/reviews">Reviews</a></li>
-          <li><Link to="/home">Home</Link></li>
+          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
+          <Link to="/profile">Profile</Link>
+          <Link to="/reviews">Reviews</Link>
+          <Link to="/home">Home</Link>
         </ul>
       </nav>
 
@@ -67,7 +101,7 @@ const Groups = ({ groups, setGroups, currentUser }) => {
         {groups.map((group) => (
           <li key={group.id} className="group-item">
             <span>{group.name}</span>
-            <button onClick={() => handleViewGroup(group.id)}>Näytä</button>
+            <button onClick={() => navigate(`/groups/${group.id}`)}>Näytä</button>
             {group.owner === currentUser && (
               <button onClick={() => handleDeleteGroup(group.id)}>Poista</button>
             )}

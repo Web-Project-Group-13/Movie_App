@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import UserRouter from './routers/UserRouter.js';
 
 // Määritellään suoraan koodissa JWT_SECRET ja PORT
-const JWT_SECRET = 'mysecretkey';
+const JWT_SECRET = '1234';
 const PORT = 3001;
 
 const app = express();

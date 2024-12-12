@@ -5,7 +5,7 @@ import { insertUser, deleteUser, selectUserByEmail } from "../models/User.js";
 
 const router = Router();
 // Kovakoodattu JWT-avain
-const JWT_SECRET = 'mysecretkey';
+const JWT_SECRET = '1234';
 
 
 router.post('/register', async (req, res, next) => {
@@ -72,6 +72,18 @@ router.post('/login', async (req, res) => {
     console.error('Kirjautumisvirhe:', error);
     res.status(500).json({ message: 'Virhe kirjautumisessa.' });
   }
+});
+
+// Kirjaudu ulos
+router.post("/logout", (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+      return res.status(400).json({ error: "Token missing" });
+  }
+
+  // Tokenin mitätöinti 
+  res.status(200).json({ message: "Logged out successfully" });
 });
 
 

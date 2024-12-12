@@ -83,8 +83,8 @@ const ReviewPage = () => {
   return (
     <div>
         <nav className="navbar">
-            <Link to="/home">Home</Link>
-            <Link to="/profile">Profile</Link>
+            <Link to="/home" className="nav-link">Home</Link>
+            <Link to="/profile"className="nav-link">Profile</Link>
             </nav>
     
     <div className="review-page">

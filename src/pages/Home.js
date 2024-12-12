@@ -157,7 +157,7 @@ const Home = () => {
   return (
     <div>
 
-      <nav class="navbar">
+      <nav className="navbar">
         
         <ul>
           <div>
@@ -182,16 +182,16 @@ const Home = () => {
            </div>
 
 
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
-          <Link to="/profile">Profile</Link>
-          <Link to="/reviews">Reviews</Link>
-          <Link to="/groups">Groups</Link>
+          <Link to="/login" className="nav-link">Login</Link>
+          <Link to="/register" className="nav-link">Register</Link>
+          <Link to="/profile" className="nav-link">Profile</Link>
+          <Link to="/reviews" className="nav-link">Reviews</Link>
+          <Link to="/groups"className="nav-link">Groups</Link>
 
         </ul>
       </nav>
 
-    <div class="split right">
+    <div className="split right">
       <h1>Finnkinon elokuvateattereiden näytösajat</h1>
       
       <select value={selectedCinema} onChange={handleCinemaChange}>
@@ -309,8 +309,9 @@ const Home = () => {
           <p>No movies found. Try searching for something else!</p>
         )}
       </div>
+      
 
-      <div>
+      <div className="split center">
         <h2>TV Results:</h2>
         {resultsTV.length > 0 ? (
           <ul style={{ listStyleType: 'none', padding: 0}}>
@@ -324,19 +325,32 @@ const Home = () => {
                   borderRadius: '5px',
                 }}
               >
+                <div className="container">
+                  {tv.poster_path && (
+                      <img
+                           src={`https://image.tmdb.org/t/p/w200/${tv.poster_path}`}
+                           alt={tv.name}
+                             style={{ width: '150px', borderRadius: '5px' }}
+                 />
+                  )}
+                </div>
+                <div className="container">
                 <h3 style={{ margin: '0 0 10px' }}>{tv.name}</h3>
                 <p style= {{ margin: 0 }}>
                   {tv.overview
                   ? tv.overview
                   : 'No description available'}
                 </p>
-              </li>
-            ))}
+              </div>
+            </li>
+          ))}
           </ul>
         ) : (
           <p>No TV series found. Try searching for something else!</p>
         )}
+      
       </div>
+      
 
       <div>
       <h2>Person Results:</h2>
@@ -365,10 +379,11 @@ const Home = () => {
           <p>No persons found. Try searching for something else!</p>
         )}
       </div>
+    </div>
 
 
       
-    </div>
+    
 
     
   );

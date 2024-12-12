@@ -3,6 +3,7 @@ import cors from 'cors';
 import UserRouter from './routers/UserRouter.js';
 import reviewRouter from './routers/reviewRouter.js';
 import favoriteMovieRouter from './routers/favoriteMovieRouter.js';
+import groupRouter from './routers/groupRouter.js';
 
 const port = 3001;
 
@@ -17,6 +18,7 @@ app.use('/', UserRouter);
 app.use('/user', UserRouter);
 app.use('/reviews', reviewRouter);
 app.use('/favorites', favoriteMovieRouter);
+app.use('/groups', groupRouter);
 
 app.use((err,req, res,next) => {
     const statusCode = err.statusCode || 500;

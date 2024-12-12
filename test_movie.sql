@@ -24,3 +24,18 @@ CREATE TABLE favorite_movies (
     created_at TIMESTAMP DEFAULT NOW(), -- Lisäysaika
     FOREIGN KEY (user_id) REFERENCES "User"(id) ON DELETE CASCADE
 );
+
+CREATE TABLE groups (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    owner VARCHAR(255) NOT NULL,
+    members TEXT[] NOT NULL
+);
+
+CREATE TABLE group_movies (
+    id SERIAL PRIMARY KEY,
+    group_id INT REFERENCES groups(id) ON DELETE CASCADE,
+    movie_id VARCHAR(255) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    poster_path VARCHAR(255)
+);

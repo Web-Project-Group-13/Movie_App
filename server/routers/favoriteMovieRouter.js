@@ -11,7 +11,7 @@ const router = express.Router();
 // Lisää suosikkielokuva
 router.post('/add', async (req, res) => {
   const { tmdbId, title, posterPath } = req.body;
-  const userId = 6
+  const userId = 5
 
   try {
     const favorite = await addFavoriteMovie(userId, tmdbId, title, posterPath);
@@ -23,7 +23,7 @@ router.post('/add', async (req, res) => {
 
 // Hae käyttäjän suosikkielokuvat
 router.get('/', async (req, res) => {
-  const userId = 6;
+  const userId = 5;
 
   try {
     const favorites = await getFavoriteMoviesByUserId(userId);
@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
 
 // Poista suosikkielokuva
 router.delete('/:id', async (req, res) => {
-  const userId = 6;
+  const userId = 5;
   const movieId = req.params.id;
 
   try {
