@@ -9,9 +9,11 @@ const Login = ({ onLogin }) => {
   const [errorMessage, setErrorMessage] = useState("");  // Virheilmoitus
   const [loading, setLoading] = useState(false);  // Lataus-indikaattori
   const navigate = useNavigate();  // Navigointi onnistuneen kirjautumisen jälkeen
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (username && password) {
       setLoading(true);
       try {
@@ -47,7 +49,21 @@ const Login = ({ onLogin }) => {
     } else {
       alert("Täytä molemmat kentät!");
     }
-  };
+
+    try {
+      const response = await axios.post('http://localhost:3001/login', {username,password,})
+
+      sessionStorage.setItem('token', response.data.token)
+      onLogin(username)
+
+      setUsername('')
+      setPassword('')
+      setError(null)
+  }catch (error) {
+      console.error('Virhe kirjautumisessa:', error.message)
+      setError('Kirjautuminen epäonnistui. Tarkista käyttäjätunnus ja salasana')
+      }
+    }
 
   return (
     <div className="login-container">

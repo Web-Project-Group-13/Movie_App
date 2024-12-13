@@ -10,9 +10,14 @@ import GroupPage from './pages/GroupPage';
 
 function App() {
   const [user, setUser] = useState(null);
+  const [currentUser,setCurrentUser] = useState(() => {
+    return sessionStorage.getItem('currentUser') || null
+  })
+
+  
   const [groups, setGroups] = useState([
     {
-      id: '123',
+      id: '2',
       name: 'Testiryhmä',
       owner: 'testi3@oamk.fi',
       members: ['testi3@oamk.fi'],
@@ -20,7 +25,8 @@ function App() {
   ]); // Ryhmädata
 
   const handleLogin = (username) => {
-    setUser(username);
+    setCurrentUser(username);
+    sessionStorage.setItem('currentUser', username)
   };
 
   const username = 'testi3@oamk.fi'; // Hae tämä myöhemmin kirjautuneen käyttäjän tiedoista
@@ -72,8 +78,7 @@ function App() {
         path="/groups/:id"
         element={
           <GroupPage
-            groups={groups}
-            currentUser={username} // Käyttäjätieto
+         // Käyttäjätieto
           />
         }
       />
