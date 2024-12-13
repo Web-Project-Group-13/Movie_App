@@ -9,27 +9,27 @@ import Groups from './pages/Groups';
 import GroupPage from './pages/GroupPage';
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [currentUser,setCurrentUser] = useState(() => {
+  const [user, setUser] = useState(() => {
+  //const [currentUser,setCurrentUser] = useState(() => {
     return sessionStorage.getItem('currentUser') || null
   })
 
   
-  const [groups, setGroups] = useState([
-    {
+  const [groups, setGroups] = useState([])
+   /* {
       id: '2',
       name: 'Testiryhmä',
       owner: 'testi7',
       members: ['testi3@oamk.fi'],
     },
-  ]); // Ryhmädata
+  ]); // Ryhmädata*/
 
   const handleLogin = (username) => {
-    setCurrentUser(username);
+    setUser(username);
     sessionStorage.setItem('currentUser', username)
   };
 
-  const username = 'testi7'; // Hae tämä myöhemmin kirjautuneen käyttäjän tiedoista
+  //const username = 'testi7'; // Hae tämä myöhemmin kirjautuneen käyttäjän tiedoista
 
   return (
     <Routes>
@@ -48,27 +48,22 @@ function App() {
       {/* Julkinen Home ilman kirjautumista */}
       <Route path="/home" element={<Home />} />
 
-      {/* Profiilisivu */}
-      <Route path="/profile" element={<Profile username={username} />} />
 
       {/* Reviews-sivu */}
       <Route path="/reviews" element={<Reviews />} />
 
 
-        
+       {/* Profiilisivu */} 
         <Route 
           path="/profile" 
-          element={user ? <Profile username={username} setUser={setUser}/>: <Navigate to="/login" /> } />
+          element={user ? <Profile username={user} setUser={setUser}/>: <Navigate to="/login" /> } />
 
       {/* Ryhmät-sivu */}
       <Route
         path="/groups"
         element={
           <Groups
-            groups={groups}
-            setGroups={setGroups}
-            currentUser={username} // Käyttäjätieto
-          />
+            currentUser={user} />// Käyttäjätieto
         }
       />
 
