@@ -19,7 +19,7 @@ function App() {
     {
       id: '2',
       name: 'Testiryhmä',
-      owner: 'testi3@oamk.fi',
+      owner: 'testi7',
       members: ['testi3@oamk.fi'],
     },
   ]); // Ryhmädata
@@ -29,7 +29,7 @@ function App() {
     sessionStorage.setItem('currentUser', username)
   };
 
-  const username = 'testi3@oamk.fi'; // Hae tämä myöhemmin kirjautuneen käyttäjän tiedoista
+  const username = 'testi7'; // Hae tämä myöhemmin kirjautuneen käyttäjän tiedoista
 
   return (
     <Routes>

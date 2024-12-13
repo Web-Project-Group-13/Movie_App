@@ -1,0 +1,33 @@
+
+  
+  .close-results {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .tmdb-results {
+    display: flex;
+    flex-wrap: wrap; /* Salli rivien jakautuminen useille riveille, jos tila ei riitä */
+    gap: 20px; /* Aseta väli elokuvien väliin */
+  }
+  
+  .movie-item {
+    width: 200px; /* Aseta jokaisen elokuvan leveys */
+    text-align: center; /* Keskitä sisältö */
+  }
+  
+  .movie-poster {
+    max-width: 100%;
+    border-radius: 10px; /* Pyöristetyt kulmat (valinnainen) */
+  }
+  .group-movies {
+    display: flex;
+    flex-wrap: wrap; /* Salli rivien jakautuminen useille riveille, jos tila ei riitä */
+    gap: 20px; /* Väli elokuvien välillä */
+    justify-content: start; /* Kohdista elokuvat vasemmalle */
+  }
+  
+  
+  

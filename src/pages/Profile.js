@@ -27,6 +27,7 @@ function Profile({ username }) {
 
         // Poista token sessionStoragesta
         sessionStorage.removeItem('token')
+        console.log('Token poistettu')
 
         //Nollaa käyttäjä
         setUser(null)
