@@ -11,7 +11,7 @@ import {
 const router = express.Router();
 
 // Luo uusi ryhmä
-router.post('/groups/add', async (req, res) => {
+router.post('/add', async (req, res) => {
   try {
     const group = await createGroup(req.body);
     res.status(201).json(group);
@@ -21,13 +21,13 @@ router.post('/groups/add', async (req, res) => {
 });
 
 // Hae tietty ryhmä ID:llä
-router.get('/groups/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
       const group = await getGroupById(id);
       console.log(group);
       if (!group) {
-        return res.status(404).json({ error: 'Ryhmä ei löytynyt.' });
+        return res.status(404).json({ error: 'Ryhmä ei löytynyt' });
       }
       res.json(group);
     } catch (error) {
@@ -48,7 +48,7 @@ router.get('/groups', async (req, res) => {
 
 
 // Poista ryhmä
-router.delete('/groups/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     await deleteGroup(id);
@@ -59,7 +59,7 @@ router.delete('/groups/:id', async (req, res) => {
 });
 
 // Lisää elokuva ryhmään
-router.post('/groups/:id/movies', async (req, res) => {
+router.post('/:id/movies', async (req, res) => {
   const { id } = req.params;
   const { movieId, title, posterPath } = req.body;
   try {
@@ -76,7 +76,7 @@ router.post('/groups/:id/movies', async (req, res) => {
 });
 
 // Hae ryhmän elokuvasuositukset
-router.get('/groups/:id/movies', async (req, res) => {
+router.get('/:id/movies', async (req, res) => {
   const { id } = req.params;
   try {
     const movies = await getMoviesByGroupId(id);
@@ -87,7 +87,7 @@ router.get('/groups/:id/movies', async (req, res) => {
 });
 
 // Poista elokuva ryhmästä
-router.delete('/groups/:groupId/movies/:movieId', async (req, res) => {
+router.delete('/:groupId/movies/:movieId', async (req, res) => {
   const { movieId } = req.params;
   try {
     await deleteMovieFromGroup(movieId);
