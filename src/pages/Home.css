@@ -73,3 +73,14 @@ body{
     align-items: bottom;
     float: right;
 }
+
+.column {
+    float: left;
+    width: 25%;
+  }
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }

@@ -187,182 +187,210 @@ const Home = () => {
         </ul>
       </nav>
 
-    <div class="split right">
-      <h1>Finnkinon elokuvateattereiden näytösajat</h1>
-      
-      <select value={selectedCinema} onChange={handleCinemaChange}>
-        <option value="">Valitse teatteri</option>
-        {cinemas.map(cinema => (
-          <option key={cinema.ID} value={cinema.ID}>
-            {cinema.Name}
-          </option>
-        ))}
-      </select>
+      <div class="row">
 
-      <div>
-        <label htmlFor="date">Valitse päivä: </label>
-        <input 
-          type="date" 
-          id="date" 
-          value={selectedDate} 
-          onChange={handleDateChange} 
-        />
-      </div>
+        <div class="column">
+          <h1>Finnkinon elokuvateattereiden näytösajat</h1>
 
-      {selectedCinema && selectedDate && (
-        <>
-          <h2>Elokuvat</h2>
-          <ul style={{ listStyleType: 'none', padding: 0 }}>
-            {movies.length === 0 ? (
-              <li>Ei elokuvia valitulle päivälle.</li>
-            ) : (
-              movies.map(movie => (
-                <li key={movie.ID} 
+          <select value={selectedCinema} onChange={handleCinemaChange}>
+            <option value="">Valitse teatteri</option>
+            {cinemas.map(cinema => (
+              <option key={cinema.ID} value={cinema.ID}>
+                {cinema.Name}
+              </option>
+            ))}
+          </select>
+
+          <div>
+            <label htmlFor="date">Valitse päivä: </label>
+            <input 
+              type="date" 
+              id="date" 
+              value={selectedDate} 
+              onChange={handleDateChange} 
+            />
+          </div>
+
+          {selectedCinema && selectedDate && (
+            <>
+              <h2>Elokuvat</h2>
+              <ul style={{ listStyleType: 'none', padding: 0 }}>
+                {movies.length === 0 ? (
+                  <li>Ei elokuvia valitulle päivälle.</li>
+                ) : (
+                  movies.map(movie => (
+                    <li key={movie.ID} 
+                      style = {{
+                      border: '1px solid #ddd',
+                      padding: '10px',
+                      marginBottom: '10px',
+                      borderRadius: '5px',
+                    }}
+                    >
+                      <div class="container">
+                        <div class="image">
+                          <img 
+                            src={movie.Images.EventMediumImagePortrait} 
+                            alt={movie.Title} 
+                            style={{ width: '200px', height: '300px' }} 
+                          />
+                        </div>
+                        <div class="text">
+                        <h3>{movie.Title}</h3>
+                        <p>Alkaa: {new Date(movie.dttmShowStart).toLocaleTimeString('fi-FI', { hour: '2-digit', minute: '2-digit' })}</p>
+                        <p>Sali: {movie.TheatreAuditorium}</p>
+
+                        {movie.RatingImageUrl && (
+                          <img 
+                            src={movie.RatingImageUrl} 
+                            alt="Ikäraja" 
+                            style={{ width: '30px', height: '30px', marginRight: '10px' }} 
+                          />
+                        )}
+                      </div>
+                      </div>
+                      
+                      
+                    </li>
+                  ))
+                )}
+              </ul>
+            </>
+          )}
+        </div>
+
+        <div class="column">
+          <h2>Movie Results:</h2>
+          {results.length > 0 ? (
+            <ul style={{ listStyleType: 'none', padding: 0}}>
+              {results.map((movie) => (
+                <li
+                  key={movie.id}
                   style = {{
-                  border: '1px solid #ddd',
-                  padding: '10px',
-                  marginBottom: '10px',
-                  borderRadius: '5px',
-                }}
-                >
-                  <div class="container">
-                    <div class="image">
-                      <img 
-                        src={movie.Images.EventMediumImagePortrait} 
-                        alt={movie.Title} 
-                        style={{ width: '200px', height: '300px' }} 
-                      />
-                    </div>
-                    <div class="text">
-                    <h3>{movie.Title}</h3>
-                    <p>Alkaa: {new Date(movie.dttmShowStart).toLocaleTimeString('fi-FI', { hour: '2-digit', minute: '2-digit' })}</p>
-                    <p>Sali: {movie.TheatreAuditorium}</p>
-                    
-                    {movie.RatingImageUrl && (
-                      <img 
-                        src={movie.RatingImageUrl} 
-                        alt="Ikäraja" 
-                        style={{ width: '30px', height: '30px', marginRight: '10px' }} 
-                      />
-                    )}
-                  </div>
-                  </div>
-                 
-                  
-                </li>
-              ))
-            )}
-          </ul>
-        </>
-      )}
-    </div>
+                    border: '1px solid #ddd',
+                    padding: '10px',
+                    marginBottom: '10px',
+                    borderRadius: '5px',
+                  }}
+                  >
 
-      <div class="split left">
-        <h2>Results:</h2>
-        {results.length > 0 ? (
-          <ul style={{ listStyleType: 'none', padding: 0}}>
-            {results.map((movie) => (
-              <li
-                key={movie.id}
-                style = {{
-                  border: '1px solid #ddd',
-                  padding: '10px',
-                  marginBottom: '10px',
-                  borderRadius: '5px',
-                }}
+
+                    <div class="container">
+                      <div class="image">
+                        <img
+                         src={'https://image.tmdb.org/t/p/w200/' + movie.poster_path}
+                         alt="img"
+                        />
+                      </div>
+                    <div class="text">
+                      <div class="text">
+                      </div>
+                      <h3 style={{ margin: '0 0 10px' }}>{movie.title}</h3>
+                      <p style= {{ margin: 0 }}>
+                        {movie.overview
+                        ? movie.overview
+                        : 'No description available'}
+                      </p>
+                      <h3 class="rating">
+                        rating:&nbsp;
+                        {movie.vote_average
+                        ? movie.vote_average
+                        : 'No rating available'}
+                      </h3>
+                    </div>
+                    </div>
+
+                  </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No movies found. Try searching for something else!</p>
+          )}
+        </div>
+
+        <div class="column">
+          <h2>TV Results:</h2>
+          {resultsTV.length > 0 ? (
+            <ul style={{ listStyleType: 'none', padding: 0}}>
+              {resultsTV.map((tv) => (
+                <li
+                  key={tv.id}
+                  style = {{
+                    border: '1px solid #eee',
+                    padding: '10px',
+                    marginBottom: '10px',
+                    borderRadius: '5px',
+                  }}
+                  >
+
+                    <div class="container">
+                      <div class="image">
+                        <img
+                         src={'https://image.tmdb.org/t/p/w200/' + tv.poster_path}
+                         alt="img"
+                        />
+                      </div>
+                      <div class="text">
+                        <h3 style={{ margin: '0 0 10px' }}>{tv.name}</h3>
+                        <p style= {{ margin: 0 }}>
+                          {tv.overview
+                          ? tv.overview
+                          : 'No description available'}
+                        </p>
+                        <h3 class="rating">
+                          rating:&nbsp;
+                          {tv.vote_average
+                          ? tv.vote_average
+                          : 'No rating available'}
+                        </h3>
+                      </div>
+                    </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No TV series found. Try searching for something else!</p>
+          )}
+        </div>
+
+        <div class="column">
+          <h2>Person Results:</h2>
+          {resultsPerson.length > 0 ? (
+            <ul style={{ listStyleType: 'none', padding: 0}}>
+              {resultsPerson.map((person) => (
+                <li
+                  key={person.id}
+                  style = {{
+                    border: '1px solid #eee',
+                    padding: '10px',
+                    marginBottom: '10px',
+                    borderRadius: '5px',
+                  }}
                 >
-                  
-                  
+
                   <div class="container">
                     <div class="image">
                       <img
-                       src={'https://image.tmdb.org/t/p/w200/' + movie.poster_path}
+                       src={'https://image.tmdb.org/t/p/w200/' + person.profile_path}
                        alt="img"
                       />
                     </div>
-                  <div class="text">
                     <div class="text">
+                      <h3 style={{ margin: '0 0 10px' }}>{person.name}</h3>
+                      <p style= {{margin: 0 }}>{person.known_for_department}</p>
+                      <p style= {{margin: 0 }}>popularity:&nbsp;{person.popularity}</p>
                     </div>
-                    <h3 style={{ margin: '0 0 10px' }}>{movie.title}</h3>
-                    <p style= {{ margin: 0 }}>
-                      {movie.overview
-                      ? movie.overview
-                      : 'No description available'}
-                    </p>
-                    <h3 class="rating">
-                      rating:&nbsp;
-                      {movie.vote_average
-                      ? movie.vote_average
-                      : 'No rating available'}
-                    </h3>
                   </div>
-                  </div>
-
+                    
                 </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No movies found. Try searching for something else!</p>
-        )}
+              ))}
+            </ul>
+          ) : (
+            <p>No persons found. Try searching for something else!</p>
+          )}
+        </div>
+
       </div>
-
-      <div>
-        <h2>TV Results:</h2>
-        {resultsTV.length > 0 ? (
-          <ul style={{ listStyleType: 'none', padding: 0}}>
-            {resultsTV.map((tv) => (
-              <li
-                key={tv.id}
-                style = {{
-                  border: '1px solid #eee',
-                  padding: '10px',
-                  marginBottom: '10px',
-                  borderRadius: '5px',
-                }}
-              >
-                <h3 style={{ margin: '0 0 10px' }}>{tv.name}</h3>
-                <p style= {{ margin: 0 }}>
-                  {tv.overview
-                  ? tv.overview
-                  : 'No description available'}
-                </p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No TV series found. Try searching for something else!</p>
-        )}
-      </div>
-
-      <div>
-      <h2>Person Results:</h2>
-        {resultsPerson.length > 0 ? (
-          <ul style={{ listStyleType: 'none', padding: 0}}>
-            {resultsPerson.map((person) => (
-              <li
-                key={person.id}
-                style = {{
-                  border: '1px solid #eee',
-                  padding: '10px',
-                  marginBottom: '10px',
-                  borderRadius: '5px',
-                }}
-              >
-                <h3 style={{ margin: '0 0 10px' }}>{person.name}</h3>
-                <p style= {{ margin: 0 }}>
-                  {person.profile_path
-                  ? person.profile_path
-                  : 'No description available'}
-                </p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No persons found. Try searching for something else!</p>
-        )}
-      </div>
-
-
       
     </div>
 
