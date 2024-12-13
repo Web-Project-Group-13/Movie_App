@@ -30,14 +30,21 @@ app.get('/', (req, res) => {
 });
 
 
-/*app.post('/login', (req, res) => {
+app.post('/login', (req, res) => {
     const {username,password} = req.body;
 
-    if (username ==='username' && password === 'password') {
-        return res.status(200).json({ message: 'Kirjautuminen onnistui!' });
-    } else {
+    if (!username || !password) {
         return res.status(400).json({ message: 'Täytä molemmat kentät!' });
     }
 
-})*/
-app.listen (port);
+    if (username === 'username' && password === 'password') {
+        return res.status(200).json({ token: 'mockToken123' });  // Palautetaan token
+    } else {
+        return res.status(400).json({ message: 'Virheellinen käyttäjätunnus tai salasana' });
+    }
+
+})
+
+app.listen (port, () => {
+    console.log(`Server running on port ${port}`);
+});

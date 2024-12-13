@@ -78,3 +78,13 @@
       width: 90%;
     }
   }  
+
+/* Virheilmoituksen tyyli */
+.error-message {
+    color: #000000;
+    background-color: #ffffff;
+    padding: 8px 12px;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    text-align: center;
+}
