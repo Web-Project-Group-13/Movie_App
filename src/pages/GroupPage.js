@@ -10,6 +10,7 @@ const GroupPage = ({currentUser }) => {
   const [tmdbQuery, setTmdbQuery] = useState('');
   const [tmdbResults, setTmdbResults] = useState([]);
   const [groupMovies, setGroupMovies] = useState([]);
+  const [showResults, setShowResults] = useState(false);
 
  // Hae ryhmä ja elokuvat
  useEffect(() => {
@@ -46,6 +47,7 @@ const handleSearch = async () => {
       },
     });
     setTmdbResults(response.data.results);
+    setShowResults(true);
   } catch (error) {
     alert('Virhe TMDb-haussa: ' + error.message);
   }
@@ -53,13 +55,24 @@ const handleSearch = async () => {
 
 // Lisää elokuva ryhmään
 const handleAddMovie = async (movie) => {
-  try {
-    const response = await axios.post(`http://localhost:3001/groups/${id}/movies`, {
-      movieId: movie.id,
+  if (groupMovies.some((m) => m.movieId === movie.id)) {
+    alert('Elokuva on jo lisätty tähän ryhmään.');
+    return;
+  }
+
+  const newMovie = {
+    movieId: movie.id,
       title: movie.title,
       posterPath: movie.poster_path,
-    });
+      //userId: currentUser.id,
+  }
+
+  try {
+    const response = await axios.post(`http://localhost:3001/groups/${id}/movies`,newMovie) 
     setGroupMovies([...groupMovies, response.data]);
+
+    setTmdbQuery('');
+    setShowResults(false);
   } catch (error) {
     alert('Virhe elokuvaa lisättäessä: ' + error.message);
   }
@@ -70,9 +83,9 @@ const handleAddMovie = async (movie) => {
   }
 
   // Käyttöoikeustarkistus
-  if (!group.members.includes(currentUser)) {
+  /*if (!group.members.includes(currentUser)) {
     return <p>Sinulla ei ole oikeutta nähdä tämän ryhmän sisältöä.</p>;
-  }
+  }*/
 
   return (
     <div>
@@ -93,29 +106,42 @@ const handleAddMovie = async (movie) => {
         onChange={(e) => setTmdbQuery(e.target.value)}
       />
       <button onClick={handleSearch}>Hae</button>
-      <ul>
+
+      {showResults && (
+      <div className="tmdb-results">
         {tmdbResults.map((movie) => (
-          <li key={movie.id}>
-            <p>{movie.title}</p>
+          <div key={movie.id} className="movie-item">
+            <h3>{movie.title}</h3>
+            {movie.poster_path ? (
+              <img
+                src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
+                alt={movie.title}
+              />
+            ) : (
+              <p>Ei kuvaa</p>
+            )}
             <button onClick={() => handleAddMovie(movie)}>Lisää ryhmään</button>
-          </li>
+          </div>
         ))}
-      </ul>
+        <button onClick={() => setShowResults(false)} classname="close-results">Sulje hakutulokset</button>
+      </div>
+      )}
 
       <h2>Ryhmän elokuvasuositukset</h2>
-      <ul>
+      <div className="group-movies">
         {groupMovies.map((movie, index) => (
-          <li key={index}>
+          <div key={index} className="movie-item">
             <p>{movie.title}</p>
             {movie.poster_path && (
               <img
                 src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
                 alt={movie.title}
+                className="movie-poster"
               />
             )}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

@@ -13,7 +13,12 @@ const router = express.Router();
 // Luo uusi ryhmä
 router.post('/add', async (req, res) => {
   try {
-    const group = await createGroup(req.body);
+    const {name,owner} = req.body;
+    const group = await createGroup({
+        name,
+        owner,
+        members: [owner],
+    });
     res.status(201).json(group);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -36,7 +41,7 @@ router.get('/:id', async (req, res) => {
   });
 
 // Hae kaikki ryhmät
-router.get('/groups', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const groups = await getAllGroups();
     res.json(groups);

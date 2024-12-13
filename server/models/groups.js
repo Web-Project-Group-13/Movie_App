@@ -19,14 +19,22 @@ const createGroup = async ({ name, owner, members }) => {
 
 // Hae kaikki ryhmät
 const getAllGroups = async () => {
-  const query = 'SELECT * FROM groups;';
+  const query = 
+  `SELECT g.id, g.name, g.members, u.username AS owner
+    FROM groups g
+    JOIN "User" u ON g.owner = u.username;`;
   const result = await pool.query(query);
   return result.rows;
 };
 
 // Hae ryhmä ID:llä
 const getGroupById = async (id) => {
-  const query = 'SELECT * FROM groups WHERE id = $1;';
+  const query = `
+      SELECT g.id, g.name, g.members, u.username AS owner
+      FROM groups g
+      JOIN "User" u ON g.owner = u.username
+      WHERE g.id = $1;
+    `;
   const result = await pool.query(query, [id]);
   return result.rows[0];
 };
