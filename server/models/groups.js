@@ -2,14 +2,19 @@ import { pool } from '../helpers/db.js'
 
 // Luo uusi ryhmä
 const createGroup = async ({ name, owner, members }) => {
-  const query = `
-    INSERT INTO groups (name, owner, members)
-    VALUES ($1, $2, $3)
-    RETURNING *;
-  `;
-  const values = [name, owner, members];
-  const result = await pool.query(query, values);
-  return result.rows[0];
+  try {
+    const query = `
+      INSERT INTO groups (name, owner, members)
+      VALUES ($1, $2, $3)
+      RETURNING *;
+    `;
+    const values = [name, owner, members];
+    const result = await pool.query(query, values);
+    return result.rows[0];
+  } catch (error) {
+      console.error("Virhe ryhmän luomisessa:", error.message);
+      throw new Error("Virhe ryhmän luomisessa");
+  }
 };
 
 // Hae kaikki ryhmät

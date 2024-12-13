@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Muutetaan navigointi Link-komponentiksi
+import { Link, useNavigate } from 'react-router-dom';
 import './Groups.css';
 import axios from 'axios';
 
@@ -19,10 +19,14 @@ const Groups = ({ currentUser }) => {
       }
     };
     fetchGroups();
-  }, []);
+  }, [groups]);
 
 
   const handleCreateGroup = async () => {
+    if (!currentUser) {
+      alert('Vain kirjautunut käyttäjä voi luoda ryhmän.');
+      return;
+    }
     if (!newGroupName.trim()) {
       alert('Anna ryhmälle nimi!');
       return;
@@ -34,7 +38,7 @@ const Groups = ({ currentUser }) => {
       owner: currentUser,
       members: [currentUser],
     });
-    setGroups([...groups, response.data]);
+    setGroups((prevGroups) => [...prevGroups, response.data]);
     setNewGroupName('');
   }catch (error) {
     console.error('Virhe ryhmän luomisessa:', error.message);
@@ -43,7 +47,7 @@ const Groups = ({ currentUser }) => {
 
   const handleDeleteGroup = async (id,owner) => {
     if (owner !== currentUser) {
-      alert('Vain ryhmän omistaja voi poistaa tämän ryhmän.');
+      alert('Vain ryhmän omistaja voi poistaa tämän ryhmän');
       return;
     }
     try {
@@ -60,12 +64,12 @@ const Groups = ({ currentUser }) => {
 
     // Tarkista onko käyttäjä ryhmän jäsen
     if (!Array.isArray(members)) {
-      alert('Virhe ryhmän jäsenten haussa.');
+      alert('Virhe ryhmän jäsenten haussa');
       return;
     }
     
     if (!members.includes(currentUser)) {
-      alert('Vain ryhmän jäsenet voivat tarkastella sisältöä.');
+      alert('Vain ryhmän jäsenet voivat tarkastella sisältöä');
       return;
     }
     // Navigoi ryhmän sivulle

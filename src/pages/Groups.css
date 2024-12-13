@@ -25,4 +25,15 @@
   button:hover {
     background-color: #0056b3;
   }
+
+  .header, .navbar {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  /* Jos haluat säätää myös linkkien väriä, lisää tämä */
+  .header a, .navbar a {
+    color: white;
+    text-decoration: none;
+  }
   
