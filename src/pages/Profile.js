@@ -13,6 +13,7 @@ function Profile({ username }) {
     const [user, setUser] = useState(null)
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
     const navigate = useNavigate()
+    const selectedUser = user;
     
     const API_KEY ='775c0d7ee555978a2f19d45471ffa589'
     const baseURL = 'https://api.themoviedb.org/3'
@@ -79,19 +80,26 @@ function Profile({ username }) {
     },[selectedGenre])
 
     //Hae suosikkielokuvat tietokannasta
+    useEffect(() => {
     const fetchFavoriteMovies = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/favorites')
+        const response = await axios.get('http://localhost:3001/favorites/${user.id}')
         setFavoriteMovies(response.data)
       } catch (error) {
         console.error('Virhe suosikkielokuvien hakemisessa:', error)
       }
       }
 
+      if (user) {
+        fetchFavoriteMovies()
+      }
+    }, [user])
+
     // Lisää elokuva suosikkeihin
     const addToFavorite =async (movie) => { 
       try {
         const response = await axios.post('http://localhost:3001/favorites/add', {
+          userId:selectedUser.id,
           tmdbId: movie.id,
           title: movie.title,
           posterPath: movie.poster_path
@@ -116,9 +124,9 @@ function Profile({ username }) {
       }
     }
 
-    useEffect(() => {
+    /*useEffect(() => {
       fetchFavoriteMovies()
-    },[])
+    },[])*/
 
         
   return (
