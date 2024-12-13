@@ -19,7 +19,7 @@ const Groups = ({ currentUser }) => {
       }
     };
     fetchGroups();
-  }, [groups]);
+  }, []);
 
 
   const handleCreateGroup = async () => {

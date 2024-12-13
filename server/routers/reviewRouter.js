@@ -1,14 +1,14 @@
 import express from 'express';
 import { addReview, getAllReviews } from '../models/review.js'
-//import { auth } from '../helpers/auth.js'; // Varmistaa, että käyttäjä on kirjautunut
+import { auth } from '../helpers/auth.js'; // Varmistaa, että käyttäjä on kirjautunut
 
 
 const router = express.Router();
 
 // Reitti arvostelun lisäämiseen
-router.post('/add', async (req, res) => {
+router.post('/add', auth,async (req, res) => {
   const { tmdbId, rating, comment,movieTitle,moviePoster } = req.body;
- const userId = 1 // Saamme käyttäjän ID:n auth middlewaresta
+ const userId = req.user.id // Saamme käyttäjän ID:n auth middlewaresta
 
   if (!tmdbId || !rating || !movieTitle || !moviePoster) {
     return res.status(400).json({ message: 'Elokuvan ID ja arvosana ovat pakollisia' });

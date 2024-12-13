@@ -29,7 +29,12 @@ CREATE TABLE groups (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     owner VARCHAR(255) NOT NULL,
-    members TEXT[] NOT NULL
+    members TEXT[] NOT NULL,
+    owner_id INT,
+    CONSTRAINT fk_owner FOREIGN KEY (owner_id)   -- Viittaus käyttäjiin
+        REFERENCES public."User" (id)
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );
 
 CREATE TABLE group_movies (
@@ -37,5 +42,14 @@ CREATE TABLE group_movies (
     group_id INT REFERENCES groups(id) ON DELETE CASCADE,
     movie_id VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
-    poster_path VARCHAR(255)
+    poster_path VARCHAR(255),
+    user_id INT,
+    CONSTRAINT fk_user FOREIGN KEY (user_id)       -- Viittaus käyttäjiin
+        REFERENCES public."User" (id)
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_group FOREIGN KEY (group_id)     -- Viittaus ryhmiin
+        REFERENCES public.groups (id)
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );

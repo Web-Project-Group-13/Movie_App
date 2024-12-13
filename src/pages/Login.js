@@ -26,7 +26,7 @@ const Login = ({ onLogin }) => {
         // Tarkistetaan, että palvelin vastasi oikein
         if (response.data.token) {
           // Tallenna token localStorageen tai sessionStorageen
-          sessionStorage.setItem('authToken', response.data.token);
+          sessionStorage.setItem('token', response.data.token);
 
           // Jos kirjautuminen onnistui, kutsutaan onLogin-funktiota
           onLogin(username);

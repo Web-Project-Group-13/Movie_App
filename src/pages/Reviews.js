@@ -54,6 +54,14 @@ const ReviewPage = () => {
     console.log('Lähetetään arvostelu', {rating, comment,selectedMovie});
 
     try {
+
+        const token = sessionStorage.getItem('token')
+        console.log('Token:', token)
+
+        if (!token) {
+            alert('Kirjaudu ensin sisään')
+            return
+        }
         const response =await axios.post('http://localhost:3001/reviews/add', 
             {
                 tmdbId: selectedMovie.id,
@@ -63,7 +71,7 @@ const ReviewPage = () => {
                 moviePoster: selectedMovie.poster_path
     },
     {
-        headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
+        headers: {Authorization: `Bearer ${token}`},
     })
         console.log('Arvostelu tallennettu', response.data)
         
