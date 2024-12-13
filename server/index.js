@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import UserRouter from './routers/UserRouter.js';
 import reviewRouter from './routers/reviewRouter.js';
+import favoriteMovieRouter from './routers/favoriteMovieRouter.js';
+import groupRouter from './routers/groupRouter.js';
 
 const port = 3001;
 
@@ -10,9 +12,13 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+
 app.use('/', UserRouter);
 app.use('/user', UserRouter);
 app.use('/reviews', reviewRouter);
+app.use('/favorites', favoriteMovieRouter);
+app.use('/groups', groupRouter);
 
 app.use((err,req, res,next) => {
     const statusCode = err.statusCode || 500;
@@ -24,14 +30,21 @@ app.get('/', (req, res) => {
 });
 
 
-/*app.post('/login', (req, res) => {
+app.post('/login', (req, res) => {
     const {username,password} = req.body;
 
-    if (username ==='username' && password === 'password') {
-        return res.status(200).json({ message: 'Kirjautuminen onnistui!' });
-    } else {
+    if (!username || !password) {
         return res.status(400).json({ message: 'Täytä molemmat kentät!' });
     }
 
-})*/
-app.listen (port);
+    if (username === 'username' && password === 'password') {
+        return res.status(200).json({ token: 'mockToken123' });  // Palautetaan token
+    } else {
+        return res.status(400).json({ message: 'Virheellinen käyttäjätunnus tai salasana' });
+    }
+
+})
+
+app.listen (port, () => {
+    console.log(`Server running on port ${port}`);
+});

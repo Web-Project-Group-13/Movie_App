@@ -3,17 +3,42 @@ import './profile.css';
 import axios from 'axios';
 import { useState } from 'react';
 import News from '../components/news.js';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Profile({ username }) {
     const [movies, setMovies] = useState([]);
     const [favoriteMovies, setFavoriteMovies] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState('all');
     const [isMenuOpen,setIsMenuOpen] = useState(false)
+    const [user, setUser] = useState(null)
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+    const navigate = useNavigate()
     
     const API_KEY ='775c0d7ee555978a2f19d45471ffa589'
     const baseURL = 'https://api.themoviedb.org/3'
+
+    
+
+    const handleLogout = () => {
+      try {
+        // Hae token sessionStoragesta
+        const token = sessionStorage.getItem('token')
+        console.log('Token:', token)
+
+        // Poista token sessionStoragesta
+        sessionStorage.removeItem('token')
+
+        //Nollaa käyttäjä
+        setUser(null)
+        sessionStorage.removeItem('currentUser')
+        
+        //Ohjaa käyttäjä Home-sivulle
+        navigate('/')
+    } catch (error) {
+        console.error('Virhe kirjauduttaessa ulos:', error)
+        alert('Kirjauduttaessa ulos tapahtui virhe.')
+    }
+  }
     
     // Poistetaan käyttäjätili
     const handleDelete = async () => {
@@ -52,32 +77,59 @@ function Profile({ username }) {
         })
     },[selectedGenre])
 
+    //Hae suosikkielokuvat tietokannasta
+    const fetchFavoriteMovies = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/favorites')
+        setFavoriteMovies(response.data)
+      } catch (error) {
+        console.error('Virhe suosikkielokuvien hakemisessa:', error)
+      }
+      }
+
     // Lisää elokuva suosikkeihin
-    const addToFavorite = (movie) => { 
-        setFavoriteMovies(prevFavorites => {
-            if(!prevFavorites.find(fav => fav.id === movie.id)){
-                return [...prevFavorites, movie]
-            }
-            return prevFavorites // Ei lisätä, jos elokuva on jo listalla
-    })
-}
-     // Poista elokuva suosikeista
-    const removeFromFavorites = (movieId) => {
-        setFavoriteMovies(prevFavorites => prevFavorites.filter(movie => movie.id !== movieId))
+    const addToFavorite =async (movie) => { 
+      try {
+        const response = await axios.post('http://localhost:3001/favorites/add', {
+          tmdbId: movie.id,
+          title: movie.title,
+          posterPath: movie.poster_path
+        })
+        setFavoriteMovies((prevFavorites) => [response.data,...prevFavorites])
+
+        } catch (error) {
+          console.error('Virhe suosikkielokuvan lisäämisessä:', error)
         }
+            //return prevFavorites // Ei lisätä, jos elokuva on jo listalla
+    }
 
+     // Poista elokuva suosikeista
+    const removeFromFavorites = async (movieId) => {
+      try {
+        await axios.delete(`http://localhost:3001/favorites/${movieId}`)
+        setFavoriteMovies((prevFavorites) => 
+          prevFavorites.filter((movie) => movie.id !== movieId)
+      )
+      } catch (error) {
+        console.error('Virhe suosikkielokuvan poistamisessa:', error)
+      }
+    }
 
+    useEffect(() => {
+      fetchFavoriteMovies()
+    },[])
+
+        
   return (
     <div>
       <nav className = "navbar">
         <Link to="/home" className="nav-link">Home</Link>
         <Link to="/reviews" className="nav-link">Reviews</Link>
-        <Link to="/logout" className="nav-link">Logout</Link>
+        <button onClick={handleLogout} className="logout-button">Logout</button>
         </nav>
     <div className='profile-container'>
       <h1>Profiili</h1>
       <h2> Tervetuloa {username}!</h2>
-      <p>Käyttäjätunnus: {username}</p>
       <button type="submit" className="delete-button" onClick={handleDelete}>
         Poista tili
       </button>
@@ -134,4 +186,6 @@ function Profile({ username }) {
 }
 
 
-export default Profile;
+
+
+export default Profile

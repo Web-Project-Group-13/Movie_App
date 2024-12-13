@@ -2,62 +2,87 @@ import React, { useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
-import Register from './pages/Register'
-import Profile from './pages/Profile'
-import Reviews from './pages/Reviews'
+import Register from './pages/Register';
+import Profile from './pages/Profile';
+import Reviews from './pages/Reviews';
+import Groups from './pages/Groups';
+import GroupPage from './pages/GroupPage';
 
 function App() {
   const [user, setUser] = useState(null);
+  const [currentUser,setCurrentUser] = useState(() => {
+    return sessionStorage.getItem('currentUser') || null
+  })
+
+  
+  const [groups, setGroups] = useState([
+    {
+      id: '2',
+      name: 'Testiryhmä',
+      owner: 'testi3@oamk.fi',
+      members: ['testi3@oamk.fi'],
+    },
+  ]); // Ryhmädata
 
   const handleLogin = (username) => {
-    setUser(username);
+    setCurrentUser(username);
+    sessionStorage.setItem('currentUser', username)
   };
 
-  /*const handleLogout = () => {
-    setUser(null);
-  };*/
-
-  const username = "testi3@oamk.fi"; // Hae tämä myöhemmin kirjautuneen käyttäjän tiedoista
+  const username = 'testi3@oamk.fi'; // Hae tämä myöhemmin kirjautuneen käyttäjän tiedoista
 
   return (
-    //<Router>
-      <Routes>
-        {/* Kirjautumissivu */}
-        <Route 
-          path="/login" 
-          element={
-            user ? <Navigate to="/" /> : <Login onLogin={handleLogin} />
-          } 
-        />
+    <Routes>
+      {/* Kirjautumissivu */}
+      <Route
+        path="/login"
+        element={user ? <Navigate to="/" /> : <Login onLogin={handleLogin} />}
+      />
 
-        {/* Rekisteröintisivu */}
-        <Route 
-          path="/register" 
-          element={<Register />}
-        />
-        {/* Home-sivu */}
-        <Route 
-          path="/" 
-          element={
-            user ? <Home /> : <Navigate to="/login" />
-          } 
-        />
+      {/* Rekisteröintisivu */}
+      <Route path="/register" element={<Register />} />
 
-        {/* Julkinen Home ilman kirjautumista */}
-        <Route 
-          path="/home" 
-          element={<Home />} />
+      {/* Home-sivu */}
+      <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
+
+      {/* Julkinen Home ilman kirjautumista */}
+      <Route path="/home" element={<Home />} />
+
+      {/* Profiilisivu */}
+      <Route path="/profile" element={<Profile username={username} />} />
+
+      {/* Reviews-sivu */}
+      <Route path="/reviews" element={<Reviews />} />
+
 
         
         <Route 
           path="/profile" 
-          element={<Profile username={username} />} />
+          element={user ? <Profile username={username} setUser={setUser}/>: <Navigate to="/login" /> } />
 
-        <Route
-          path="/reviews"
-          element={<Reviews />} />
-      </Routes>
-    //</Router>
+      {/* Ryhmät-sivu */}
+      <Route
+        path="/groups"
+        element={
+          <Groups
+            groups={groups}
+            setGroups={setGroups}
+            currentUser={username} // Käyttäjätieto
+          />
+        }
+      />
+
+
+      {/* Yksittäisen ryhmän sivu */}
+      <Route
+        path="/groups/:id"
+        element={
+          <GroupPage
+         // Käyttäjätieto
+          />
+        }
+      />
+    </Routes>
   );
 }
 

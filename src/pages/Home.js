@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Home.css';
 import { XMLParser } from 'fast-xml-parser';
+import { Link } from 'react-router-dom';
 
 
 
@@ -156,7 +157,7 @@ const Home = () => {
   return (
     <div>
 
-      <nav class="navbar">
+      <nav className="navbar">
         
         <ul>
           <div>
@@ -180,10 +181,13 @@ const Home = () => {
            />
            </div>
 
-          <li><a href="/login">Login</a></li>
-          <li><a href="/register">Register</a></li>
-          <li><a href="/profile">Profile</a></li>
-          <li><a href="/reviews">Reviews</a></li>
+
+          <Link to="/login" className="nav-link">Login</Link>
+          <Link to="/register" className="nav-link">Register</Link>
+          <Link to="/profile" className="nav-link">Profile</Link>
+          <Link to="/reviews" className="nav-link">Reviews</Link>
+          <Link to="/groups"className="nav-link">Groups</Link>
+
         </ul>
       </nav>
 
@@ -389,10 +393,10 @@ const Home = () => {
             <p>No persons found. Try searching for something else!</p>
           )}
         </div>
-
       </div>
-      
-    </div>
+
+
+    
 
     
   );

@@ -5,31 +5,33 @@ body{
 .navbar{
     position: relative;
     z-index: 99;
+    padding: 10px 20px;
+   
 }
 .navbar ul{
 
     list-style-type: none;
-    background-color: #fc6537;
-    padding: 0px;
     margin: 0px;
     overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    gap:20px;
+    padding: 0;
+    color: white;
 }
 
-.navbar a{
+.nav-link {
     color: white;
     text-decoration: none;
-    padding: 15px;
-    display: block;
-    text-align: center;
-}
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius:4px;
+  }
 
-.navbar a:hover{
-    background-color: hsl(14, 97%, 70%);
-}
-
-.navbar li{
-    float: right;
-}
+  .nav-link:hover {
+    background-color: #0056b3;
+    text-decoration: underline;
+  }
 
 .navbar input{
     float: left;
@@ -43,7 +45,6 @@ body{
 
 .split{
     height: 100%;
-    width: 50%;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -53,20 +54,27 @@ body{
 
 .left {
     left: 0;
+    width:33.33%;
     background-color: white;
   }
 
-  .right {
+.right {
     right: 0;
+    width:33.33%;
     background-color: white;
   }
+.center {
+    left:33.33%;
+    width:33.33%;
+    background-color: white;
+}
   
 
 .container{
     display: grid;
-    align-items: top;
+    align-items: start;
     grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 5px;
+    column-gap: 10px;
 }
 
 .rating{
