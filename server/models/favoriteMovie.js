@@ -1,11 +1,13 @@
 import { pool } from '../helpers/db.js';
 
-const addFavoriteMovie = async (userId, tmdbId, title, posterPath) => {
+const addFavoriteMovie = async (username, tmdbId, title, posterPath) => {
     try {
       const result = await pool.query(
-        `INSERT INTO public.favorite_movies (user_id, tmdb_id, title, poster_path) 
-         VALUES ($1, $2, $3, $4) RETURNING *`,
-        [userId, tmdbId, title, posterPath]
+        `INSERT INTO public.favorite_movies (user_id, tmdb_id, title, poster_path)
+             SELECT id, $2, $3, $4
+             FROM public."User"
+             WHERE username = $1 RETURNING *`,
+        [username, tmdbId, title, posterPath]
       );
       return result.rows[0]; // Palautetaan lisätty suosikkielokuva
     } catch (error) {
@@ -13,11 +15,15 @@ const addFavoriteMovie = async (userId, tmdbId, title, posterPath) => {
     }
   };
   
-  const getFavoriteMoviesByUserId = async (userId) => {
+  const getFavoriteMoviesByUsername = async (username) => {
     try {
       const result = await pool.query(
-        `SELECT * FROM public.favorite_movies WHERE user_id = $1 ORDER BY created_at DESC`,
-        [userId]
+        `SELECT f.*
+             FROM public.favorite_movies f
+             JOIN public."User" u ON f.user_id = u.id
+             WHERE u.username = $1
+             ORDER BY f.created_at DESC`,
+        [username]
       );
       return result.rows; // Palautetaan käyttäjän suosikkielokuvat
     } catch (error) {
@@ -25,11 +31,13 @@ const addFavoriteMovie = async (userId, tmdbId, title, posterPath) => {
     }
   };
   
-  const deleteFavoriteMovie = async (userId, movieId) => {
+  const deleteFavoriteMovie = async (username, movieId) => {
     try {
       const result = await pool.query(
-        `DELETE FROM public.favorite_movies WHERE user_id = $1 AND id = $2 RETURNING *`,
-        [userId, movieId]
+        `DELETE FROM public.favorite_movies
+             WHERE user_id = (SELECT id FROM public."User" WHERE username = $1) AND tmdb_id = $2
+             RETURNING *`,
+        [username, movieId]
       );
       return result.rows[0]; // Palautetaan poistettu elokuva
     } catch (error) {
@@ -37,4 +45,4 @@ const addFavoriteMovie = async (userId, tmdbId, title, posterPath) => {
     }
   };
   
-  export { addFavoriteMovie, getFavoriteMoviesByUserId, deleteFavoriteMovie };
+  export { addFavoriteMovie, getFavoriteMoviesByUsername, deleteFavoriteMovie };

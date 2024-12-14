@@ -5,14 +5,21 @@ const StarRating = ({ rating }) => {
   
   // Lisää tähtiä ratingin mukaan (täysi tähti tai tyhjä tähti)
   for (let i = 1; i <= 5; i++) {
-    if (i <= rating) {
-      stars.push('★'); // Täysi tähti
-    } else {
-      stars.push('☆'); // Tyhjä tähti
-    }
+    stars.push(
+      <span
+        key={i}
+        style={{
+          color: i <= rating ? 'gold' : 'gray',
+          fontSize: '24px',
+          marginRight: '5px'
+        }}
+        >    
+     {i <= rating ? '★' : '☆'}
+      </span>
+    )
   }
 
-  return <span>{stars.join(' ')}</span>; // Näyttää tähtiä
+  return <div>{stars}</div>; // Näyttää tähtiä
 };
 
 export default StarRating;

@@ -7,15 +7,20 @@ import Profile from './pages/Profile';
 import Reviews from './pages/Reviews';
 import Groups from './pages/Groups';
 import GroupPage from './pages/GroupPage';
+import {useNavigate} from 'react-router-dom';
+
+
 
 function App() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(() => {
+    const savedUser = sessionStorage.getItem('currentUser');
   //const [currentUser,setCurrentUser] = useState(() => {
-    return sessionStorage.getItem('currentUser') || null
+    return savedUser ? savedUser : null
   })
 
   
-  const [groups, setGroups] = useState([])
+  //const [groups, setGroups] = useState([])
    /* {
       id: '2',
       name: 'Testiryhmä',
@@ -28,6 +33,24 @@ function App() {
     setUser(username);
     sessionStorage.setItem('currentUser', username)
   };
+
+  const handleLogout = () => {
+    try {
+      // Poista token sessionStoragesta
+      sessionStorage.removeItem('token')
+      sessionStorage.removeItem('currentUser')
+      console.log('Token poistettu')
+
+      //Nollaa käyttäjä
+      setUser(null)
+      
+      //Ohjaa käyttäjä Home-sivulle
+      navigate('/')
+  } catch (error) {
+      console.error('Virhe kirjauduttaessa ulos:', error)
+      alert('Kirjauduttaessa ulos tapahtui virhe.')
+  }
+}
 
   //const username = 'testi7'; // Hae tämä myöhemmin kirjautuneen käyttäjän tiedoista
 
@@ -56,7 +79,7 @@ function App() {
        {/* Profiilisivu */} 
         <Route 
           path="/profile" 
-          element={user ? <Profile username={user} setUser={setUser}/>: <Navigate to="/login" /> } />
+          element={user ? (<Profile user={{username:user}} onLogout={handleLogout}/>): (<Navigate to="/login" />) } />
 
       {/* Ryhmät-sivu */}
       <Route

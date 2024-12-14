@@ -93,6 +93,7 @@ const ReviewPage = () => {
         <nav className="navbar">
             <Link to="/home" className="nav-link">Home</Link>
             <Link to="/profile"className="nav-link">Profile</Link>
+            <Link to="/groups" className="nav-link">Groups</Link>
             </nav>
     
     <div className="review-page">

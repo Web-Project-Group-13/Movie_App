@@ -3,44 +3,20 @@ import './profile.css';
 import axios from 'axios';
 import { useState } from 'react';
 import News from '../components/news.js';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, } from 'react-router-dom';
 
-function Profile({ username }) {
+function Profile({ user,onLogout }) {
     const [movies, setMovies] = useState([]);
     const [favoriteMovies, setFavoriteMovies] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState('all');
     const [isMenuOpen,setIsMenuOpen] = useState(false)
-    const [user, setUser] = useState(null)
+    //const [user, setUser] = useState(null)
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
-    const navigate = useNavigate()
-    const selectedUser = user;
     
     const API_KEY ='775c0d7ee555978a2f19d45471ffa589'
     const baseURL = 'https://api.themoviedb.org/3'
 
-    
-
-    const handleLogout = () => {
-      try {
-        // Hae token sessionStoragesta
-        const token = sessionStorage.getItem('token')
-        console.log('Token:', token)
-
-        // Poista token sessionStoragesta
-        sessionStorage.removeItem('token')
-        console.log('Token poistettu')
-
-        //Nollaa käyttäjä
-        setUser(null)
-        sessionStorage.removeItem('currentUser')
-        
-        //Ohjaa käyttäjä Home-sivulle
-        navigate('/')
-    } catch (error) {
-        console.error('Virhe kirjauduttaessa ulos:', error)
-        alert('Kirjauduttaessa ulos tapahtui virhe.')
-    }
-  }
+  
     
     // Poistetaan käyttäjätili
     const handleDelete = async () => {
@@ -48,7 +24,7 @@ function Profile({ username }) {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:3001/user/delete/${username}`, {
+      const response = await fetch(`http://localhost:3001/user/delete/${user.username}`, {
         method: 'DELETE',
       });
 
@@ -82,24 +58,32 @@ function Profile({ username }) {
     //Hae suosikkielokuvat tietokannasta
     useEffect(() => {
     const fetchFavoriteMovies = async () => {
+      if (!user || !user.username) {
+        console.log('Käyttäjää ei ole kirjautunut sisään')
+        return
+      }
       try {
-        const response = await axios.get('http://localhost:3001/favorites/${user.id}')
+        const response = await axios.get(`http://localhost:3001/favorites/${user.username}`)
         setFavoriteMovies(response.data)
       } catch (error) {
         console.error('Virhe suosikkielokuvien hakemisessa:', error)
       }
       }
 
-      if (user) {
+      
         fetchFavoriteMovies()
-      }
+      
     }, [user])
 
     // Lisää elokuva suosikkeihin
     const addToFavorite =async (movie) => { 
+      if (!user || !user.username) {
+        console.log('Käyttäjää ei ole kirjautunut sisään')
+        return
+      }
       try {
         const response = await axios.post('http://localhost:3001/favorites/add', {
-          userId:selectedUser.id,
+          username:user.username,
           tmdbId: movie.id,
           title: movie.title,
           posterPath: movie.poster_path
@@ -113,12 +97,16 @@ function Profile({ username }) {
     }
 
      // Poista elokuva suosikeista
-    const removeFromFavorites = async (movieId) => {
+    const removeFromFavorites = async (movieId,username) => {
       try {
-        await axios.delete(`http://localhost:3001/favorites/${movieId}`)
+        const response=await axios.delete(`http://localhost:3001/favorites/${movieId}`, {
+          data:{username}
+        })
+        
         setFavoriteMovies((prevFavorites) => 
           prevFavorites.filter((movie) => movie.id !== movieId)
       )
+      console.log(response.data.message)
       } catch (error) {
         console.error('Virhe suosikkielokuvan poistamisessa:', error)
       }
@@ -134,11 +122,12 @@ function Profile({ username }) {
       <nav className = "navbar">
         <Link to="/home" className="nav-link">Home</Link>
         <Link to="/reviews" className="nav-link">Reviews</Link>
-        <button onClick={handleLogout} className="logout-button">Logout</button>
+        <Link to="/groups" className="nav-link">Groups</Link>
+        <button onClick={onLogout} className="logout-button">Logout</button>
         </nav>
     <div className='profile-container'>
       <h1>Profiili</h1>
-      <h2> Tervetuloa {username}!</h2>
+      <h2> Tervetuloa {user.username}!</h2>
       <button type="submit" className="delete-button" onClick={handleDelete}>
         Poista tili
       </button>
