@@ -92,3 +92,42 @@ body{
     display: table;
     clear: both;
   }
+
+/* Tyylit alasvetovalikolle */
+.row select {
+    padding: 10px; /* Lisää täytettä kenttään */
+    font-size: 16px; /* Suurempi fontti */
+    border: 2px solid #ccc; /* Kehys */
+    border-radius: 5px; /* Pyöristetyt kulmat */
+    background-color: #f9f9f9; /* Vaalea taustaväri */
+    transition: border-color 0.3s ease; /* Sujuva siirtymä */
+  }
+  
+  .row select:hover {
+    border-color: #007bff; /* Korostetaan kehystä hoverissa */
+  }
+  
+  .row select:focus {
+    outline: none;
+    border-color: #e6c01a; /* Korostus, kun valikko on valittuna */
+  }
+  
+  /* Tyylit päivämääräkentälle */
+  .row input[type="date"] {
+    padding: 10px; /* Lisää täytettä kenttään */
+    font-size: 16px; /* Suurempi fontti */
+    border: 2px solid #ccc; /* Kehys */
+    border-radius: 5px; /* Pyöristetyt kulmat */
+    background-color: #f9f9f9; /* Vaalea taustaväri */
+    transition: border-color 0.3s ease; /* Sujuva siirtymä */
+  }
+  
+  .row input[type="date"]:hover {
+    border-color: #007bff; /* Korostetaan kehystä hoverissa */
+  }
+  
+  .row input[type="date"]:focus {
+    outline: none;
+    border-color: #e6c01a; /* Korostus, kun kenttä on valittuna */
+  }
+  

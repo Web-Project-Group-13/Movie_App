@@ -187,14 +187,20 @@
         background: rgba(0, 17, 2, 0.863);
         color: white;
         border: none;
-        padding: 10px;
+        border-radius: 50%;
+        padding: 5px;
         font-size: 18px;
         cursor: pointer;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
         z-index: 1000;
-        opacity: 1;  /* Asetetaan aina näkyväksi */
+        opacity: 1; 
+        width:40px;
+        height: 40px;
+        display:flex;
+        align-items: center;
+        justify-content: center;
         visibility: visible; /* Aina näkyvissä */
         transition: opacity 0.3s ease; /* Lisätään sujuva siirtymä */
     }

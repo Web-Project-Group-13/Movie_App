@@ -2,7 +2,7 @@ import express from 'express';
 //import { auth } from '../helpers/auth.js';
 import {
   addFavoriteMovie,
-  getFavoriteMoviesByUserId,
+  getFavoriteMoviesByUsername,
   deleteFavoriteMovie,
 } from '../models/favoriteMovie.js';
 
@@ -10,14 +10,14 @@ const router = express.Router();
 
 // Lisää suosikkielokuva
 router.post('/add', async (req, res) => {
-  const { tmdbId, title, posterPath } = req.body;
-  if (!userId) {
+  const { username,tmdbId, title, posterPath } = req.body;
+  if (!username) {
     return res.status(400).json({ message: 'Käyttäjä ei ole kirjautunut' });
   }
  //const userId = 5
 
   try {
-    const favorite = await addFavoriteMovie(userId, tmdbId, title, posterPath);
+    const favorite = await addFavoriteMovie(username, tmdbId, title, posterPath);
     res.status(201).json(favorite);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -25,11 +25,13 @@ router.post('/add', async (req, res) => {
 });
 
 // Hae käyttäjän suosikkielokuvat
-router.get('/:userId', async (req, res) => {
-  const {userId} = req.params
+router.get('/:username', async (req, res) => {
+  const {username} = req.params
+
+  console.log(`${username}`)
 
   try {
-    const favorites = await getFavoriteMoviesByUserId(userId);
+    const favorites = await getFavoriteMoviesByUsername(username);
     res.status(200).json(favorites);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -38,11 +40,17 @@ router.get('/:userId', async (req, res) => {
 
 // Poista suosikkielokuva
 router.delete('/:id', async (req, res) => {
-  const userId = 5;
+  const {username} = req.body
   const movieId = req.params.id;
 
+  console.log('Käyttäjänimi:', username)
+
+  if (!username) {
+    return res.status(400).json({ message: 'Käyttäjänimi puuttuu' });
+  }
+    
   try {
-    const deletedMovie = await deleteFavoriteMovie(userId, movieId);
+    const deletedMovie = await deleteFavoriteMovie(username, movieId);
     if (deletedMovie) {
       res.status(200).json({ message: 'Suosikkielokuva poistettu onnistuneesti', movie: deletedMovie });
     } else {
