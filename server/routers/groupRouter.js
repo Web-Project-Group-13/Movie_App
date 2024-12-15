@@ -50,8 +50,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-
-
 // Poista ryhmä
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
