@@ -182,11 +182,11 @@ const Home = () => {
            </div>
 
 
-          <Link to="/login" className="nav-link">Login</Link>
-          <Link to="/register" className="nav-link">Register</Link>
-          <Link to="/profile" className="nav-link">Profile</Link>
-          <Link to="/reviews" className="nav-link">Reviews</Link>
-          <Link to="/groups"className="nav-link">Groups</Link>
+          <Link to="/login" className="nav-link">Kirjautuminen</Link>
+          <Link to="/register" className="nav-link">Rekisteröityminen</Link>
+          <Link to="/profile" className="nav-link">Profiili</Link>
+          <Link to="/reviews" className="nav-link">Arvostelut</Link>
+          <Link to="/groups"className="nav-link">Ryhmät</Link>
 
         </ul>
       </nav>
@@ -264,7 +264,7 @@ const Home = () => {
         </div>
 
         <div class="column">
-          <h2>Movie Results:</h2>
+          <h2>Elokuvat:</h2>
           {results.length > 0 ? (
             <ul style={{ listStyleType: 'none', padding: 0}}>
               {results.map((movie) => (
@@ -313,7 +313,7 @@ const Home = () => {
         </div>
 
         <div class="column">
-          <h2>TV Results:</h2>
+          <h2>TV-sarjat:</h2>
           {resultsTV.length > 0 ? (
             <ul style={{ listStyleType: 'none', padding: 0}}>
               {resultsTV.map((tv) => (
@@ -358,7 +358,7 @@ const Home = () => {
         </div>
 
         <div class="column">
-          <h2>Person Results:</h2>
+          <h2>Näyttelijät:</h2>
           {resultsPerson.length > 0 ? (
             <ul style={{ listStyleType: 'none', padding: 0}}>
               {resultsPerson.map((person) => (

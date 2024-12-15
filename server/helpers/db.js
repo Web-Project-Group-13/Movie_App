@@ -7,7 +7,7 @@ const openDb = () => {
     const pool = new Pool({
         user: 'postgres',
         host: 'localhost',
-        password:'', // Määrittämäsi salasana
+        password:'Pontus93', // Määrittämäsi salasana
         database: 'test_movie',
         port: 5432
     })

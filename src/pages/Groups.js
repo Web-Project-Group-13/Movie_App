@@ -81,11 +81,11 @@ const Groups = ({ currentUser }) => {
     <div className="groups">
       <nav className="navbar">
         <ul>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
-          <Link to="/profile">Profile</Link>
-          <Link to="/reviews">Reviews</Link>
-          <Link to="/home">Home</Link>
+          <Link to="/login">Kirjautuminen</Link>
+          <Link to="/register">Rekisteröityminen</Link>
+          <Link to="/profile">Profiili</Link>
+          <Link to="/reviews">Arvostelut</Link>
+          <Link to="/home">Etusivu</Link>
         </ul>
       </nav>
 
@@ -105,9 +105,9 @@ const Groups = ({ currentUser }) => {
         {groups.map((group) => (
           <li key={group.id} className="group-item">
             <span>{group.name}</span>
-            <button onClick={() => navigate(`/groups/${group.id}`)}>Näytä</button>
+            <button onClick={() => handleViewGroup(group.id,group.members)}>Näytä</button>
             {group.owner === currentUser && (
-              <button onClick={() => handleDeleteGroup(group.id)}>Poista</button>
+              <button onClick={() => handleDeleteGroup(group.id,group.owner)}>Poista</button>
             )}
           </li>
         ))}
