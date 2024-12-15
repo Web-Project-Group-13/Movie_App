@@ -57,6 +57,7 @@ const Groups = ({ currentUser }) => {
     console.error('Virhe ryhmän poistamisessa:', error.message);
   }
 }
+
   // Näytä ryhmän sisältö
   const handleViewGroup = (id,members = []) => {
     console.log('Ryhmän jäsenet:', members);
@@ -105,9 +106,9 @@ const Groups = ({ currentUser }) => {
         {groups.map((group) => (
           <li key={group.id} className="group-item">
             <span>{group.name}</span>
-            <button onClick={() => navigate(`/groups/${group.id}`)}>Näytä</button>
+            <button onClick={() => handleViewGroup(group.id, group.members)}>Näytä</button>
             {group.owner === currentUser && (
-              <button onClick={() => handleDeleteGroup(group.id)}>Poista</button>
+              <button onClick={() => handleDeleteGroup(group.id, group.owner)}>Poista</button>
             )}
           </li>
         ))}
