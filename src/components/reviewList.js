@@ -6,10 +6,10 @@ const ReviewList = ({reviews}) => {
   return (
     <div>
       <h2>Arvostelut</h2>
-      <ul>
+      <div className="reviews-container">
         {Array.isArray(reviews) && reviews.length > 0 ? (
             reviews.map((review) => (
-          <li key={review.id}>
+          <div className="review-card" key={review.id}>
             <h4>Elokuva:{review.movie_title}</h4>
             {review.movie_poster && (
             <img 
@@ -21,12 +21,12 @@ const ReviewList = ({reviews}) => {
             <p>Kommentti: {review.comment}</p>
             <p>Sähköposti: {review.username}</p>
             <p>Aikaleima: {new Date(review.created_at).toLocaleString()}</p>
-          </li>
+          </div>
             ))
         ) : (
             <p>Ei arvosteluja</p>
         )}
-      </ul>
+      </div>
     </div>
   );
 };

@@ -98,21 +98,38 @@
     background-color: #0056b3;
   }
   
-  .review-form-container {
-    margin-top: 20px;
-    background-color: #fff;
+  .reviews-container {
+    display: flex; /* Flexbox layout */
+    flex-wrap: wrap; /* Rivittää kortit seuraavalle riville tarvittaessa */
+    gap: 20px; /* Väli korttien välillä */
+    justify-content: space-evenly; /* Järjestää kortit tasaisesti */
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin:20 px auto
   }
   
-  .review-form { 
-    display:flex;
-    flex-direction:column;
-    gap:15px
+  .review-card {
+    flex: 1 1 calc(25% - 20px); /* Kortit vievät 25% tilasta (4 per rivi) */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Tyylitelty laatikko */
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: center; /* Keskittää sisällön */
   }
+  
+  .review-card img {
+    width: 100%; /* Kuva mukautuu kortin kokoon */
+    max-height: auto;
+    object-fit: contain; /* näyttää koko kuvan ilman leikkausta */
+    border-radius: 4px;
+  }
+  
+  .review-card h4 {
+    margin-bottom: 10px;
+  }
+  
+  .review-card p {
+    margin: 5px 0;
+  }
+  
 
   .form-group {
     display: flex;

@@ -91,9 +91,9 @@ const ReviewPage = () => {
   return (
     <div>
         <nav className="navbar">
-            <Link to="/home" className="nav-link">Home</Link>
-            <Link to="/profile"className="nav-link">Profile</Link>
-            <Link to="/groups" className="nav-link">Groups</Link>
+            <Link to="/home" className="nav-link">Etusivu</Link>
+            <Link to="/profile"className="nav-link">Profiili</Link>
+            <Link to="/groups" className="nav-link">Ryhmät</Link>
             </nav>
     
     <div className="review-page">

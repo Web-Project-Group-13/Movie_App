@@ -82,11 +82,11 @@ const Groups = ({ currentUser }) => {
     <div className="groups">
       <nav className="navbar">
         <ul>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
-          <Link to="/profile">Profile</Link>
-          <Link to="/reviews">Reviews</Link>
-          <Link to="/home">Home</Link>
+          <Link to="/login">Kirjautuminen</Link>
+          <Link to="/register">Rekisteröityminen</Link>
+          <Link to="/profile">Profiili</Link>
+          <Link to="/reviews">Arvostelut</Link>
+          <Link to="/home">Etusivu</Link>
         </ul>
       </nav>
 

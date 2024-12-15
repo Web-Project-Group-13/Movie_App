@@ -120,17 +120,22 @@ function Profile({ user,onLogout }) {
   return (
     <div>
       <nav className = "navbar">
-        <Link to="/home" className="nav-link">Home</Link>
-        <Link to="/reviews" className="nav-link">Reviews</Link>
-        <Link to="/groups" className="nav-link">Groups</Link>
-        <button onClick={onLogout} className="logout-button">Logout</button>
-        </nav>
+        <div className="nav-links">
+          <Link to="/home" className="nav-link">Etusivu</Link>
+          <Link to="/reviews" className="nav-link">Arvostelut</Link>
+          <Link to="/groups" className="nav-link">Ryhmät</Link>
+          <button onClick={onLogout} className="logout-button">Kirjaudu ulos</button>
+        </div>
+        <div className="nav-actions">
+        <button type="submit" className="delete-button" onClick={handleDelete}>
+        Poista tili </button>
+        </div>
+        
+      </nav>
     <div className='profile-container'>
-      <h1>Profiili</h1>
-      <h2> Tervetuloa {user.username}!</h2>
-      <button type="submit" className="delete-button" onClick={handleDelete}>
-        Poista tili
-      </button>
+      <h1>Profiilisivu</h1>
+      <h2> Tervetuloa {user.username} takaisin!</h2>
+      
     </div>
     <News />
     <button onClick={toggleMenu} className="toggle-menu-button">

@@ -15,20 +15,9 @@
     font-size: 18px;
     margin-Bottom: 20px;
   }
-  .delete-button {
-    background-color: #ff4d4d; 
-    color: #fff; 
-    border: none; 
-    padding: 15px 30px; 
-    border-radius: 12px; 
-    font-size: 16px; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease; 
-  }
+  
 
-  .delete-button:hover {
-    background: #240108;
-  }
+  
 
     /* Valikko, joka aluksi piilotetaan */
   .movie-container {
@@ -228,6 +217,11 @@
     background-color: #007bff;
     color: white;
   }
+
+  .nav-links {
+    display: flex;
+    gap: 15px; /* Väli linkkien välillä */
+  }
   
   .nav-link {
     color: white;
@@ -239,4 +233,26 @@
   .nav-link:hover {
     background-color: #0056b3;
     text-decoration: underline;
+  }
+
+  .nav-actions {
+    margin-left: auto; /* Siirtää napit oikealle */
+    display: flex;
+    gap: 10px; /* Väli nappien välillä */
+  }
+
+ .delete-button {
+    background-color: #ff4d4d; 
+    color: #fff; 
+    border: none; 
+    padding: 15px 30px; 
+    border-radius: 12px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    
+  }
+
+  .delete-button:hover {
+    background: #240108;
   }
