@@ -36,7 +36,7 @@ Tietoturvasta on huolehdittu eri kirjastoilla, kuten CORS, JWT sekä Bcrypt. COR
 Voit ottaa sovelluksen käyttöön omalla tietokoneellasi seuraavasti:
 
 1. Kloonaa projekti GitHubista. Projektin URL: https://github.com/Web-Project-Group-13/movieapp.git
-2. Määritä PostgreSQL-tietokantayhteys siirtymällä projektissa server-kansioon ja ajamalla siinä komennon npm run devStart.
+2. Määritä PostgreSQL-tietokantayhteys siirtymällä projektissa server-kansioon ja aja siinä komento npm run devStart.
 3. Käynnistä sovellus projektin juurikansiossa komennolla npm start. Sovellus avautuu selaimessa osoitteessa http://localhost:3000/login
 
 
