@@ -1,11 +1,13 @@
-# MOVIEAPP 
+# MOVIE APP -elokuvasivusto
 
 Web-ohjelmoinnin sovellusprojekti syksy 2024.
 
 
 ## Esittely
 
-Toisen vuoden tvt-opiskelijoiden web-sovellus leffaharrastajille.
+Movie App on web-sovellus leffaharrastajille. Sovelluksen ovat tehneet toisen vuoden tieto- ja viestintätekniikan opiskelijat Oulun ammattikorkeakoulusta (OAMK).
+
+Projektia ovat tehneet Jenni Välikangas, Johanna Kuikka ja Jaakko Hätälä. 
 
 ### Toiminnallisuudet
 
