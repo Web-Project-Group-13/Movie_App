@@ -9,8 +9,12 @@ Movie App on web-sovellus leffaharrastajille. Sovellukseen rekisteröitynyt käy
 
 Sovelluksen ovat tehneet toisen vuoden tieto- ja viestintätekniikan opiskelijat Oulun ammattikorkeakoulusta (OAMK). Projektiryhmän jäseniä ovat olleet Jenni Välikangas, Johanna Kuikka, Jaakko Hätälä ja Miko Kylmänen. Ryhmän jokainen jäsen on tehnyt fullstack-ohjelmointia, mutta jokaiselle jaettiin myös erillisiä vastuualueita. Jenni on vastannut elokuvien hausta Finnkino APIsta, käyttäjän rekisteröinnistä, profiilisivusta sekä elokuvien arvosteluista. Johanna on vastannut elokuvien hausta Finnkino APIsta, käyttäjän kirjautumisesta sekä ryhmäsivusta. Jaakko on vastannut sovelluksen tietokannasta sekä hakutoiminnoista Movie Databasesta ja Miko on osallistunut hakutoimintojen toteutukseen Movie Databasea hyödyntäen.
 
+
+
 ![image](https://github.com/user-attachments/assets/10d3bcc7-4b33-4667-8280-ae9bd1749aba)
-Kuva 1. Movie App -sovelluksen etusivu.
+
+_Kuva 1. Movie App -sovelluksen etusivu._
+
 
 
 
