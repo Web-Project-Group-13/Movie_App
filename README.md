@@ -9,7 +9,9 @@ Movie App on web-sovellus leffaharrastajille. Sovellukseen rekisteröitynyt käy
 
 Sovelluksen ovat tehneet toisen vuoden tieto- ja viestintätekniikan opiskelijat Oulun ammattikorkeakoulusta (OAMK). Projektiryhmän jäseniä ovat olleet Jenni Välikangas, Johanna Kuikka, Jaakko Hätälä ja Miko Kylmänen. Ryhmän jokainen jäsen on tehnyt fullstack-ohjelmointia, mutta jokaiselle jaettiin myös erillisiä vastuualueita. Jenni on vastannut elokuvien hausta Finnkino APIsta, käyttäjän rekisteröinnistä, profiilisivusta sekä elokuvien arvosteluista. Johanna on vastannut elokuvien hausta Finnkino APIsta, käyttäjän kirjautumisesta sekä ryhmäsivusta. Jaakko on vastannut sovelluksen tietokannasta sekä hakutoiminnoista Movie Databasesta ja Miko on osallistunut hakutoimintojen toteutukseen Movie Databasea hyödyntäen. 
 
+
 ## Teknologiat
+
 
 ### Frontend
 
@@ -19,6 +21,7 @@ Frontendin arkkitehtuuri noudattaa komponenttipohjaista lähestymistapaa. App.js
 
 Sovellus on integroitu kolmansien osapuolten APIen kanssa. Elokuvien, sarjojen sekä näyttelijöiden hakutoiminnoissa on käytetty The Movie Database (TMDB) -rajapintaa. Toinen API tarjoaa kaikki Finnkinon elokuvateatterit Suomessa sekä niissä esitettävien elokuvien näytösajat. Näiden APIen tarjoamia tietoja voidaan hyödyntää esimerkiksi niin, että käyttäjä katsoo kyseisellä ajanhetkellä näytettävät elokuvat haluamastaan Finnkinon elokuvateatterista ja sen jälkeen etsii elokuvasta lisätietoja hyödyntäen TMDB:n tarjoamaa elokuvien hakua.
 
+
 ### Backend
 
 Sovelluksessa käytetään PostgreSQL-tietokantaa käyttäjien tietojen tallentamiseen. Tietokantaan tallennetaan esimerkiksi käyttäjäkohtaiset tiedot, arvostelut ja ryhmät. Tietokannan keskiössä on käyttäjä, joka voi tehdä arvosteluita elokuvista ja lisätä niitä suosikkeihin. Käyttäjä voi myös perustaa eri ryhmiä, joille annetaan nimi ryhmän luomisen yhteydessä. Käyttäjä voi lisätä ryhmään elokuvasuosituksia.
@@ -27,10 +30,13 @@ Sovelluksen palvelinpuoli on kehitetty Javascriptin Node.js-ajoympäristössä E
 
 Tietoturvasta on huolehdittu eri kirjastoilla, kuten CORS, JWT sekä Bcrypt. CORS eli Cross-origin resource sharing on mekanismi, jolla säädellään verkkosivujen lataamia resursseja eri alkuperistä tulevilta verkkopalvelimilta. Tällä voidaan määrittää, mitkä verkkopalvelinosoitteet saavat ladattua resursseja sovelluksen kehittäjän rajapinnasta. JSON Web Token eli JWT on tiiviste (token), jota käytetään käyttäjien autentikointiin. Tällä tavalla osa päätepisteistä on suojattu, jolloin ainoastaan sisäänkirjautunut käyttäjä voi kutsua tiettyjä päätepisteitä. Palvelin luo tokenin sisäänkirjautuessa ja se luodaan käyttäjän ID:n sekä salaisen avaimen avulla. Bcrypt on käyttäjien salasanojen salaamiseen tarkoitettu kirjasto.
 
-### Sovelluksen käyttöönotto
 
-1. Kloonaa projekti GitHubista. Projektin URL: https://github.com/Web-Project-Group-13/movieapp.git.
+## Sovelluksen käyttöönotto
+
+Voit ottaa sovelluksen käyttöön omalla tietokoneellasi seuraavasti:
+
+1. Kloonaa projekti GitHubista. Projektin URL: https://github.com/Web-Project-Group-13/movieapp.git
 2. Määritä PostgreSQL-tietokantayhteys siirtymällä projektissa server-kansioon ja ajamalla siinä komennon npm run devStart.
-3. Käynnistä sovellus projektin juurikansiossa komennolla npm start. Sovellus avautuu selaimessa osoitteessa http://localhost:3000/login.
+3. Käynnistä sovellus projektin juurikansiossa komennolla npm start. Sovellus avautuu selaimessa osoitteessa http://localhost:3000/login
 
 
