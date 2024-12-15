@@ -29,7 +29,7 @@ Sovellus on integroitu kolmansien osapuolten APIen kanssa. Elokuvien, sarjojen s
 
 ### Backend
 
-Sovelluksessa käytetään PostgreSQL-tietokantaa käyttäjien tietojen tallentamiseen. Tietokantaan tallennetaan esimerkiksi käyttäjäkohtaiset tiedot, arvostelut ja ryhmät. Tietokannan keskiössä on käyttäjä, joka voi tehdä arvosteluita elokuvista ja lisätä niitä suosikkeihin. Käyttäjä voi myös perustaa eri ryhmiä, joille annetaan nimi ryhmän luomisen yhteydessä. Käyttäjä voi lisätä ryhmään elokuvasuosituksia.
+Sovelluksessa käytetään PostgreSQL-tietokantaa käyttäjien tietojen tallentamiseen. Tietokantaan tallennetaan esimerkiksi käyttäjäkohtaiset tiedot, arvostelut ja ryhmät. Tietokannan keskiössä on käyttäjä, joka voi tehdä arvosteluita elokuvista ja lisätä niitä suosikkeihin. Käyttäjä voi myös perustaa eri ryhmiä, joille annetaan nimi ryhmän luomisen yhteydessä. Ryhmässä käyttäjä voi lisätä elokuvasuosituksia.
 
 Sovelluksen palvelinpuoli on kehitetty Javascriptin Node.js-ajoympäristössä Express-kirjastoa hyödyntäen. Node.js tarjoaa ajoympäristön Javascript-ohjelmoinnille palvelinpuolella, kun taas Express tekee palvelimen reitityksestä ja konfiguroinnista sekä HTTP-pyyntöjen käsittelystä helppoa ja selkeää.
 
