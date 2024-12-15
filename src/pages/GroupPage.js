@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import FinnkinoSearch from '../components/FinnkinoSearch';
 
 const GroupPage = ({currentUser }) => {
   const { id } = useParams();
@@ -84,6 +85,10 @@ const handleAddMovie = async (movie) => {
 
   return (
     <div>
+      <nav className="navbar">
+      <button onClick={() => navigate('/groups')}>Takaisin ryhmiin</button>
+      </nav>
+
       <h1>{group.name}</h1>
       <p>Omistaja: {group.owner}</p>
       <h2>Jäsenet</h2>
@@ -92,8 +97,9 @@ const handleAddMovie = async (movie) => {
           <li key={index}>{member}</li>
         ))}
       </ul>
-      <button onClick={() => navigate('/groups')}>Takaisin ryhmiin</button>
-      <h2>TMDb-elokuvahaku</h2>
+      
+      <h2>Hae elokuvia</h2>
+      <p>Voit lisätä ryhmään elokuvia TMDb-haun kautta.</p>
       <input
         type="text"
         placeholder="Hae elokuvia..."
@@ -122,7 +128,10 @@ const handleAddMovie = async (movie) => {
       </div>
       )}
 
+      
+
       <h2>Ryhmän elokuvasuositukset</h2>
+      
       <div className="group-movies">
         {groupMovies.map((movie, index) => (
           <div key={index} className="movie-item">
@@ -137,6 +146,7 @@ const handleAddMovie = async (movie) => {
           </div>
         ))}
       </div>
+      <FinnkinoSearch />
     </div>
   );
 };
