@@ -117,8 +117,8 @@
   
   .review-card img {
     width: 100%; /* Kuva mukautuu kortin kokoon */
-    max-height: 200px;
-    object-fit: cover; /* Rajaa kuvan ilman venytystä */
+    max-height: auto;
+    object-fit: contain; /* näyttää koko kuvan ilman leikkausta */
     border-radius: 4px;
   }
   
