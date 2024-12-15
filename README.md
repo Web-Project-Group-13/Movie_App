@@ -11,9 +11,11 @@ Sovelluksen ovat tehneet toisen vuoden tieto- ja viestintätekniikan opiskelijat
 
 
 
+
 ![image](https://github.com/user-attachments/assets/10d3bcc7-4b33-4667-8280-ae9bd1749aba)
 
 _Kuva 1. Movie App -sovelluksen etusivu._
+
 
 
 
