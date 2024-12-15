@@ -4,15 +4,15 @@ CREATE TABLE "User" (
     password VARCHAR(255) NOT NULL
 );
 
-DROP TABLE IF EXISTS reviews;
-CREATE TABLE reviews (
+CREATE TABLE IF NOT EXISTS public.reviews (
     id SERIAL PRIMARY KEY,
-    tmdb_id INT NOT NULL, -- TMDb-elokuvan ID
-    user_id INT NOT NULL, -- Viittaus User-tauluun
-    stars INT CHECK (stars >= 1 AND stars <= 5), -- Tähdet (1–5)
-    comment TEXT, -- Sanallinen arvostelu
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Aikaleima
-    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "User" (id) ON DELETE CASCADE
+    tmdb_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL REFERENCES public."User" (id) ON DELETE CASCADE,
+    stars INTEGER CHECK (stars BETWEEN 1 AND 5),
+    comment TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    movie_title VARCHAR(255),
+    movie_poster VARCHAR(255)
 );
 
 CREATE TABLE favorite_movies (

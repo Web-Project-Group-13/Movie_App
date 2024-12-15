@@ -4,12 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState("");  // Käyttäjätunnus
-  const [password, setPassword] = useState("");  // Salasana
-  const [errorMessage, setErrorMessage] = useState("");  // Virheilmoitus
-  const [loading, setLoading] = useState(false);  // Lataus-indikaattori
-  const navigate = useNavigate();  // Navigointi onnistuneen kirjautumisen jälkeen
-  //const [error, setError] = useState(null);
+  const [username, setUsername] = useState(""); 
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +24,7 @@ const Login = ({ onLogin }) => {
 
         // Tarkistetaan, että palvelin vastasi oikein
         if (response.data.token) {
-          // Tallenna token localStorageen tai sessionStorageen
+          // Tallenna token sessionStorageen
           sessionStorage.setItem('token', response.data.token);
           sessionStorage.setItem('currentUser', username);
 
